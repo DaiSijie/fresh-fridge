@@ -41,7 +41,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
     private OnFragmentInteractionListener mListener;
 
     private Button scanBtn;
-    private TextView formatTxt, contentTxt;
+    private TextView contentTxt;
+    private long content;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -82,8 +83,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            contentTxt.setText("CONTENT: " + scanContent);
+            content = Long.parseLong(scanContent);
+            // contentTxt.setText("CONTENT: " + scanContent);
         }
         else{
             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -103,7 +104,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         scanBtn = (Button)getView().findViewById(R.id.scan_button);
-        formatTxt = (TextView)getView().findViewById(R.id.scan_format);
         contentTxt = (TextView)getView().findViewById(R.id.scan_content);
 
         scanBtn.setOnClickListener(this);
@@ -129,5 +129,9 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public long getContent() {
+        return content;
     }
 }
