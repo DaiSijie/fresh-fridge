@@ -28,13 +28,17 @@ public class SmartMealFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_smart_meal, container, false);
 
+
+        TextView nothingToShow = (TextView)view.findViewById(R.id.nothingToShow);
         TextView text1 = (TextView)view.findViewById(R.id.textView);
-        TextView text2 = (TextView)view.findViewById(R.id.textView2);
-        TextView text3 = (TextView)view.findViewById(R.id.textView3);
         Button button11 = (Button)view.findViewById(R.id.button11);
         Button button12 = (Button)view.findViewById(R.id.button12);
+
+        TextView text2 = (TextView)view.findViewById(R.id.textView2);
         Button button21 = (Button)view.findViewById(R.id.button21);
         Button button22 = (Button)view.findViewById(R.id.button22);
+
+        TextView text3 = (TextView)view.findViewById(R.id.textView3);
         Button button31 = (Button)view.findViewById(R.id.button31);
         Button button32 = (Button)view.findViewById(R.id.button32);
 
@@ -53,6 +57,10 @@ public class SmartMealFragment extends Fragment {
                     Database.s.provideHint(name1, false);
                 }
             });
+        } else{
+            text1.setVisibility(View.GONE);
+            button11.setVisibility(View.GONE);
+            button12.setVisibility(View.GONE);
 
         }
         if(size > 1) {
@@ -70,8 +78,13 @@ public class SmartMealFragment extends Fragment {
                     Database.s.provideHint(name2, false);
                 }
             });
-
+        }else {
+            text2.setVisibility(View.GONE);
+            button21.setVisibility(View.GONE);
+            button22.setVisibility(View.GONE);
+            nothingToShow.setVisibility(View.VISIBLE);
         }
+
         if(size > 2) {
             final String name3 = bests.get(2).getKey();
             text3.setText("Meal suggestion 3 : " + name3);
@@ -87,7 +100,10 @@ public class SmartMealFragment extends Fragment {
                     Database.s.provideHint(name3, false);
                 }
             });
-
+        } else {
+            text3.setVisibility(View.GONE);
+            button31.setVisibility(View.GONE);
+            button32.setVisibility(View.GONE);
         }
 
         return view;
