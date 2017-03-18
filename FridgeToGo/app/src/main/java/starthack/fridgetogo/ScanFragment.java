@@ -33,13 +33,11 @@ public class ScanFragment extends Fragment implements OnClickListener {
     private static final String ARG_PARAM2 = "param2";
 
     // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     private OnFragmentInteractionListener mListener;
 
     private Button scanBtn;
-    private TextView formatTxt, contentTxt;
+    private long content;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -62,10 +60,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
@@ -80,8 +75,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
-            String scanFormat = scanningResult.getFormatName();
-            contentTxt.setText("CONTENT: " + scanContent);
+            content = Long.parseLong(scanContent);
+            // contentTxt.setText("CONTENT: " + scanContent);
         }
         else{
             Toast toast = Toast.makeText(getActivity().getApplicationContext(),
@@ -101,7 +96,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         scanBtn = (Button)getView().findViewById(R.id.scan_button);
-        contentTxt = (TextView)getView().findViewById(R.id.scan_content);
 
         scanBtn.setOnClickListener(this);
     }
@@ -126,5 +120,9 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    public long getContent() {
+        return content;
     }
 }
