@@ -1,25 +1,30 @@
 package starthack.fridgetogo;
 
 import android.content.SharedPreferences;
+import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
 
-import android.widget.TextView;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class FridgeToGo extends AppCompatActivity {
+    private static final String PREFS = "prefs";
+    private static final String PRODUCTS_PREFS = "productPrefs";
+    private static SharedPreferences mPrefs;
+    private static SharedPreferences.Editor editor;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -44,9 +49,17 @@ public class FridgeToGo extends AppCompatActivity {
         setContentView(R.layout.activity_fridge_to_go);
 
         // Restore preferences
-        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
-        boolean silent = settings.getBoolean("silentMode", false);
-        setSilent(silent);*/
+        mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
+        editor = mPrefs.edit();
+
+        List<Product> products = new ArrayList<Product>();
+        Gson gson = new Gson();
+        String json = mPrefs.getString(PRODUCTS_PREFS, "");
+        Type listType = new TypeToken<ArrayList<Product>>(){}.getType();
+        if (!json.isEmpty()){
+            products = gson.fromJson(json, listType);
+        }
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -83,41 +96,6 @@ public class FridgeToGo extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    /**
-     * A placeholder fragment containing a simple view.
-     */
-    public static class PlaceholderFragment extends Fragment {
-        /**
-         * The fragment argument representing the section number for this
-         * fragment.
-         */
-        private static final String ARG_SECTION_NUMBER = "section_number";
-
-        public PlaceholderFragment() {
-        }
-
-        /**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         */
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_fridge_to_go, container, false);
-            TextView textView = (TextView) rootView.findViewById(R.id.section_label);
-            textView.setText(getString(R.string.section_format, getArguments().getInt(ARG_SECTION_NUMBER)));
-            return rootView;
-        }
     }
 
     /**
