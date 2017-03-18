@@ -83,7 +83,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
             String scanFormat = scanningResult.getFormatName();
-            formatTxt.setText("FORMAT: " + scanFormat);
             contentTxt.setText("CONTENT: " + scanContent);
         }
         else{
