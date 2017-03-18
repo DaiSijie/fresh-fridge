@@ -100,6 +100,7 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
+<<<<<<< HEAD
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.scan_button){
@@ -157,6 +158,8 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
             return rootView;
         }
     }
+=======
+>>>>>>> 845e518138f4b107993df5c0583682d7b7c81f31
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -170,9 +173,19 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
 
         @Override
         public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a PlaceholderFragment (defined as a static inner class below).
-            return PlaceholderFragment.newInstance(position + 1);
+            return MyFridgeFragment.newInstance();
+            /*switch (position) {
+                case 0:
+                    return MyFridgeFragment.newInstance();
+                case 1:
+                    return MyFridgeFragment.newInstance();
+                case 2:
+                    return MyFridgeFragment.newInstance();
+                case 3:
+                    return MyFridgeFragment.newInstance();
+                default:
+                    return null;
+            }*/
         }
 
         @Override
@@ -185,13 +198,13 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
         public CharSequence getPageTitle(int position) {
             switch (position) {
                 case 0:
-                    return "SECTION 1";
+                    return "MY FRIDGE";
                 case 1:
-                    return "SECTION 2";
+                    return "SCAN";
                 case 2:
-                    return "SECTION 3";
+                    return "SMART MEAL";
                 case 3:
-                    return "SECTION 4";
+                    return "SMART PURCHASE";
             }
             return null;
         }
