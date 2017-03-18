@@ -1,9 +1,6 @@
-package starthack.fridgetogo.data;
+package starthack.fridgetogo.data1;
 
 import android.app.Application;
-
-import com.parse.Parse;
-import com.parse.interceptors.ParseLogInterceptor;
 
 public class ParseApplication extends Application {
     public static String PARSE_APPLICATION_ID = "";

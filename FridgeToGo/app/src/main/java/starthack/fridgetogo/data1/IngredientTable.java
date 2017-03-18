@@ -1,4 +1,4 @@
-package starthack.fridgetogo.data;
+package starthack.fridgetogo.data1;
 
 import com.parse.ParseObject;
 import com.parse.ParseClassName;

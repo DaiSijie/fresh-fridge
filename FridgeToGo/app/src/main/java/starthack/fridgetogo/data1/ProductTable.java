@@ -1,12 +1,10 @@
-package starthack.fridgetogo.data;
+package starthack.fridgetogo.data1;
 
 import com.parse.ParseClassName;
 import com.parse.ParseObject;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
-
-import starthack.fridgetogo.data.IngredientTable;
 
 
 @ParseClassName("ProductTable")
