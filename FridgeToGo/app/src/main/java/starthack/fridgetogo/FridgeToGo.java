@@ -1,24 +1,27 @@
 package starthack.fridgetogo;
 
+import android.app.DatePickerDialog;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
+import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -27,7 +30,9 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
@@ -41,8 +46,19 @@ public class FridgeToGo extends AppCompatActivity {
 
     private static SharedPreferences mPrefs;
     private static SharedPreferences.Editor mEditor;
-    private List<Product> products = new ArrayList<Product>();
-    private BarcodeMapping barcodeMapping = new BarcodeMapping();
+    private static List<Product> products = new ArrayList<Product>();
+    private static BarcodeMapping barcodeMapping = new BarcodeMapping();
+    /*private static final String[] ingredients = {"Curry","Nuts","White wine","Potatoes","Pepper",
+            "Bacon","Vinegar","Pecorino","Lemon","Veal","Sour cream","Celery","Beef sirloin",
+            "Basilic","Cocoa powder","Beef Jerky","Lasagna noodles","Vanilla extract","Tomatoes",
+            "Mascarpone","Shrimp","Milk","Sausage","Ketchup","Onion","Baking soda","Flour",
+            "Broccoli","Tuna","Green peas","Parmesan","Raclette","Avocado","Chicken","Parsley",
+            "Whipped cream","Paris mushroom","Ground beef","Mozzarella","Sesame seeds","Yogurt",
+            "Pignons","Red wine","Coffee","Kale","Corn Flakes","Toast","Red bel pepper",
+            "Coconut milk","Cabbage","Sugar","Rice","Pizza dough","Egg","Fondue cheese","Butter",
+            "Buns","Chocolate","Biscuits","Olives","Olive oil","Mayo","Fajita bread","Carrots",
+            "Ham","Garlic","Pasta","Mustard"};*/
+    /*private static final ArrayList<String> ingredientList = new ArrayList<>(Arrays.asList(ingredients));*/
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -84,11 +100,6 @@ public class FridgeToGo extends AppCompatActivity {
             barcodeMapping = mappingGson.fromJson(json2, mappingType);
         }
 
-        Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
-        Product product = new Product(ingredient, 2017, 12, 20, 2015, 12, 10, 22.5);
-        products.add(product);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -126,46 +137,38 @@ public class FridgeToGo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addMapping(long barcode, Ingredient ingredient){
+    /*public void addMapping(long barcode, String ingredient){
         barcodeMapping.add(barcode, ingredient);
         refreshPreferences();
     }
 
-    public void addProduct(Product product){
+    public static void addProduct(Product product){
         products.add(product);
         refreshPreferences();
     }
 
-    public List<Product> getProducts(){
+    public static List<Product> getProducts(){
         return products;
-    }
+    }*/
 
-    public BarcodeMapping getBarcodeMapping(){
+    /*public String getIngredient(int index){
+        return ingredientList.get(index);
+    }*/
+
+    /*public BarcodeMapping getBarcodeMapping(){
         return barcodeMapping;
-    }
+    }*/
 
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
             String scanContent = scanningResult.getContents();
-            Log.d("MyActivity", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-            long content = Long.parseLong(scanContent);
-            Ingredient ingredient = barcodeMapping.findBarcode(content);
+            long barcode = Long.parseLong(scanContent);
+            String ingredient = Database.getIngredientFromCode(barcode);
             if(ingredient == null){
-                addAllInfo(getProducts());
-
-                ingredient = new Ingredient("Yog", 225, true, true, -1, -1, -1, -1);
-                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, 3.2);
-                addMapping(content, ingredient);
-                addProduct(product);
+                addAllInfo(Database.getIngredientList(), barcode);
             } else{
-                addAllInfo(getProducts());
-
-                Date creationDate = null;
-                Date peremptionDate = null;
-                double price = 2.2;
-                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, price);
-                addProduct(product);
+                addProductInfo(ingredient);
             }
         }
         else{
@@ -175,13 +178,7 @@ public class FridgeToGo extends AppCompatActivity {
         }
     }
 
-    public void addAllInfo(final List<Product> products) {
-        final ArrayAdapter<Product> adapter = new ProductAdapter(getApplicationContext(), R.layout.product_item, products);
-
-        final Spinner sp = new Spinner(this);
-        sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
-        sp.setAdapter(adapter);
-        sp.setOnItemSelectedListener(new OnSpinnerItemClicked());
+    public void addAllInfo(final List<String> ingredients, final long barcode) {
 
         LayoutInflater li = LayoutInflater.from(this);
 
@@ -191,25 +188,77 @@ public class FridgeToGo extends AppCompatActivity {
 
         alertDialogBuilder.setView(promptsView);
 
-        alertDialogBuilder.setTitle("Add product info");
+// set dialog message
 
-        final Spinner sp = (Spinner) promptsView
-                .findViewById(R.id.allProductsLayout);
+        alertDialogBuilder.setTitle("New product : " + barcode);
 
+        alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int which) {
+                String ingredient = Database.currentIngredient;
+                Database.putCodeToIngredient(ingredient, barcode);
+                Date peremptionDate = Calendar.getInstance().getTime();
+                peremptionDate.setTime(peremptionDate.getTime() + 100000000000l*(long)Math.random());
+                Database.putNewObjectInFridge(ingredient, peremptionDate);
+            }
+        });
+
+// create alert dialog
         final AlertDialog alertDialog = alertDialogBuilder.create();
 
+        final Spinner mSpinner= (Spinner) promptsView
+                .findViewById(R.id.productSpinner);
+
+        ArrayAdapter spinnerArrayAdapter = new ArrayAdapter(this,
+                android.R.layout.simple_spinner_dropdown_item,
+                ingredients);
+        mSpinner.setAdapter(spinnerArrayAdapter);
+
+// reference UI elements from my_dialog_layout in similar fashion
+
+        mSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener(){
+            @Override
+            public void onItemSelected(AdapterView<?> parent,
+                                       View view, int pos, long id) {
+                Toast.makeText(parent.getContext(), "Clicked : " +
+                        parent.getItemAtPosition(pos).toString(), Toast.LENGTH_LONG).show();
+
+                Database.currentIngredient = (String)parent.getItemAtPosition(pos);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView parent) {
+                // Do nothing.
+            }
+        });
+
+// show it
         alertDialog.show();
-        alertDialog.setCanceledOnTouchOutside(false);
+        alertDialog.setCanceledOnTouchOutside(true);
     }
 
-    private List<String> getProductNames(List<Product> products) {
-        List<String> productsName = new ArrayList<>();
+    public void addProductInfo(final String ingredient) {
 
-        for(Product product: products){
-            productsName.add(product.getIngredient().getName());
-        }
-        return productsName;
+        LayoutInflater li = LayoutInflater.from(this);
+
+        View promptsView = li.inflate(R.layout.add_product_info, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setView(promptsView);
+
+// set dialog message
+
+        alertDialogBuilder.setTitle("Add product : " + ingredient);
+
+
+// create alert dialog
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+
+// show it
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(true);
     }
+
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
@@ -260,7 +309,7 @@ public class FridgeToGo extends AppCompatActivity {
         }
     }
 
-    private void refreshPreferences() {
+    private static void refreshPreferences() {
         Gson gson1 = new Gson();
         Gson gson2 = new Gson();
         String json1 = gson1.toJson(products);

@@ -4,28 +4,32 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Product {
-    private static Ingredient ingredient;
+    private static String ingredient;
     private static Date peremptionDate;
     private static Date creationDate;
-    private static double price;
 
-    public Product(Ingredient ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
-                   int creationYear, int creationMonth, int creationDay, double price) {
+    public Product(String ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
+                   int creationYear, int creationMonth, int creationDay) {
         this.ingredient = ingredient;
         this.peremptionDate = new GregorianCalendar(peremptionYear, peremptionMonth, peremptionDay).getTime();
         this.creationDate = new GregorianCalendar(creationYear, creationMonth, creationDay).getTime();
-        this.price = price;
     }
 
-    public Product(Ingredient ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
-                   Date creationDate, double price) {
+    public Product(String ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
+                   Date creationDate) {
         this.ingredient = ingredient;
         this.peremptionDate = new GregorianCalendar(peremptionYear, peremptionMonth, peremptionDay).getTime();
         this.creationDate = creationDate;
-        this.price = price;
     }
 
-    public Ingredient getIngredient(){
+    public Product(String ingredient, Date peremptionDate,
+                   Date creationDate) {
+        this.ingredient = ingredient;
+        this.peremptionDate = peremptionDate;
+        this.creationDate = creationDate;
+    }
+
+    public String getIngredient(){
         return ingredient;
     }
 
@@ -35,9 +39,5 @@ public class Product {
 
     public Date getCreationDate(){
         return creationDate;
-    }
-
-    public double getPrice(){
-        return price;
     }
 }

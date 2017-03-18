@@ -8,17 +8,17 @@ import java.util.Map;
  */
 
 public class BarcodeMapping {
-    private Map<Long, Ingredient> mapping;
+    private Map<Long, String> mapping;
 
     public BarcodeMapping(){
         mapping = new HashMap<>();
     }
 
-    public Ingredient findBarcode(long barcode){
+    public String findBarcode(long barcode){
         return mapping.get(barcode);
     }
 
-    public void add(long barcode, Ingredient ingredient){
-        mapping.put(barcode, ingredient);
+    public void add(long barcode, String string){
+        mapping.put(barcode, string);
     }
 }
