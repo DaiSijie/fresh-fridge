@@ -1,36 +1,30 @@
 package starthack.fridgetogo;
 
 import android.content.Intent;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.net.Uri;
+import android.nfc.Tag;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.Toast;
-
-import java.util.Calendar;
-import java.util.Date;
-
-import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
-import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
-
-import android.content.Intent;
-import android.view.View.OnClickListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Date;
 import java.util.List;
+
+import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
+import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -46,7 +40,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
 
 
     private Button scanBtn;
-    private long content;
     private Spinner spinner;
 
     public ScanFragment() {
@@ -74,34 +67,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
-        if (scanningResult != null) {
-            String scanContent = scanningResult.getContents();
-            content = Long.parseLong(scanContent);
-            Ingredient ingredient = barcodeMapping.findBarcode(content);
-            if(ingredient == null){
-                addAllInfo(((FridgeToGo)getActivity()).getProducts());
-
-                ingredient = new Ingredient("Yog", 225, true, true, -1, -1, -1, -1);
-                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, 3.2);
-                ((FridgeToGo)getActivity()).addMapping(content, ingredient);
-                ((FridgeToGo)getActivity()).addProduct(product);
-            } else{
-                Date creationDate = null;
-                Date peremptionDate = null;
-                double price = 2.2;
-                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, price);
-                ((FridgeToGo)getActivity()).addProduct(product);
-            }
-        }
-        else{
-            Toast toast = Toast.makeText(getActivity().getApplicationContext(),
-                    "No scan data received!", Toast.LENGTH_SHORT);
-            toast.show();
-        }
-    }
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -116,33 +81,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
 
         scanBtn.setOnClickListener(this);
 
-    }
-
-    public void addAllInfo(final List<Product> products) {
-        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-        alertDialog.setTitle("Add the ingredient information");
-
-        String [] productNames = getProductNames(products);
-        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
-                        android.R.layout.simple_spinner_item, productNames);
-
-        final Spinner sp = new Spinner(getActivity());
-        sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
-        sp.setAdapter(adapter);
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setView(sp);
-        builder.create().show();
-        alertDialog.show();
-    }
-
-    private String[] getProductNames(List<Product> products) {
-        String [] productsName = new String [products.size()];
-
-        for(int i = 0; i < products.size(); ++i) {
-            productsName[i] = products.get(i).getIngredient().getName();
-        }
-        return productsName;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -166,9 +104,5 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
-    }
-
-    public long getContent() {
-        return content;
     }
 }

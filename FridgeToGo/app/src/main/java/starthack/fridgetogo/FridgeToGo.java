@@ -1,5 +1,6 @@
 package starthack.fridgetogo;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
@@ -7,17 +8,30 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+
+import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
+import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
 
 
 public class FridgeToGo extends AppCompatActivity {
@@ -64,10 +78,10 @@ public class FridgeToGo extends AppCompatActivity {
         }
 
         Gson mappingGson = new Gson();
-        String json2 = mPrefs.getString(PRODUCTS_PREFS, "");
+        String json2 = mPrefs.getString(MAPPING_PREFS, "");
         Type mappingType = new TypeToken<BarcodeMapping>(){}.getType();
         if (!json2.isEmpty()){
-            products = mappingGson.fromJson(json2, mappingType);
+            barcodeMapping = mappingGson.fromJson(json2, mappingType);
         }
 
         Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
@@ -128,6 +142,73 @@ public class FridgeToGo extends AppCompatActivity {
 
     public BarcodeMapping getBarcodeMapping(){
         return barcodeMapping;
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
+        IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
+        if (scanningResult != null) {
+            String scanContent = scanningResult.getContents();
+            Log.d("MyActivity", "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+            long content = Long.parseLong(scanContent);
+            Ingredient ingredient = barcodeMapping.findBarcode(content);
+            if(ingredient == null){
+                addAllInfo(getProducts());
+
+                ingredient = new Ingredient("Yog", 225, true, true, -1, -1, -1, -1);
+                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, 3.2);
+                addMapping(content, ingredient);
+                addProduct(product);
+            } else{
+                addAllInfo(getProducts());
+
+                Date creationDate = null;
+                Date peremptionDate = null;
+                double price = 2.2;
+                Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, price);
+                addProduct(product);
+            }
+        }
+        else{
+            Toast toast = Toast.makeText(this.getApplicationContext(),
+                    "No scan data received!", Toast.LENGTH_SHORT);
+            toast.show();
+        }
+    }
+
+    public void addAllInfo(final List<Product> products) {
+        final ArrayAdapter<Product> adapter = new ProductAdapter(getApplicationContext(), R.layout.product_item, products);
+
+        final Spinner sp = new Spinner(this);
+        sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+        sp.setAdapter(adapter);
+        sp.setOnItemSelectedListener(new OnSpinnerItemClicked());
+
+        LayoutInflater li = LayoutInflater.from(this);
+
+        View promptsView = li.inflate(R.layout.add_product_info, null);
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
+
+        alertDialogBuilder.setView(promptsView);
+
+        alertDialogBuilder.setTitle("Add product info");
+
+        final Spinner sp = (Spinner) promptsView
+                .findViewById(R.id.allProductsLayout);
+
+        final AlertDialog alertDialog = alertDialogBuilder.create();
+
+        alertDialog.show();
+        alertDialog.setCanceledOnTouchOutside(false);
+    }
+
+    private List<String> getProductNames(List<Product> products) {
+        List<String> productsName = new ArrayList<>();
+
+        for(Product product: products){
+            productsName.add(product.getIngredient().getName());
+        }
+        return productsName;
     }
 
     /**
