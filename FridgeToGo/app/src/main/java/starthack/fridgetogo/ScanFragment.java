@@ -3,7 +3,7 @@ package starthack.fridgetogo;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +14,6 @@ import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
-import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.TextView;
@@ -56,12 +55,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
      * @return A new instance of fragment ScanFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static ScanFragment newInstance(String param1, String param2) {
+    public static ScanFragment newInstance() {
         ScanFragment fragment = new ScanFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
         return fragment;
     }
 
@@ -83,7 +78,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.scan_button){
-            IntentIntegrator scanIntegrator = new IntentIntegrator((Fragment) this);
+            IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
             scanIntegrator.initiateScan();
         }
     }
@@ -115,23 +110,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
-    }
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        if (context instanceof OnFragmentInteractionListener) {
-            mListener = (OnFragmentInteractionListener) context;
-        } else {
-            throw new RuntimeException(context.toString()
-                    + " must implement OnFragmentInteractionListener");
-        }
-    }
-
-    @Override
-    public void onDetach() {
-        super.onDetach();
-        mListener = null;
     }
 
     /**

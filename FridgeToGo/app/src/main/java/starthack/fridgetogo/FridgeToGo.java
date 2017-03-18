@@ -1,8 +1,7 @@
 package starthack.fridgetogo;
 
+import android.content.SharedPreferences;
 import android.support.design.widget.TabLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 
@@ -44,6 +43,11 @@ public class FridgeToGo extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fridge_to_go);
 
+        // Restore preferences
+        /*SharedPreferences settings = getSharedPreferences(PREFS_NAME, 0);
+        boolean silent = settings.getBoolean("silentMode", false);
+        setSilent(silent);*/
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         // Create the adapter that will return a fragment for each of the three
@@ -56,8 +60,6 @@ public class FridgeToGo extends AppCompatActivity {
 
         TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
         tabLayout.setupWithViewPager(mViewPager);
-
-
     }
 
 
@@ -130,19 +132,19 @@ public class FridgeToGo extends AppCompatActivity {
 
         @Override
         public Fragment getItem(int position) {
-            return MyFridgeFragment.newInstance();
-            /*switch (position) {
+            Fragment fragment = null;
+            switch (position) {
                 case 0:
-                    return MyFridgeFragment.newInstance();
+                    fragment = MyFridgeFragment.newInstance(); break;
                 case 1:
-                    return MyFridgeFragment.newInstance();
+                    fragment = ScanFragment.newInstance(); break;
                 case 2:
-                    return MyFridgeFragment.newInstance();
+                    fragment = MyFridgeFragment.newInstance(); break;
                 case 3:
-                    return MyFridgeFragment.newInstance();
-                default:
-                    return null;
-            }*/
+                    fragment = MyFridgeFragment.newInstance(); break;
+            }
+
+            return fragment;
         }
 
         @Override
