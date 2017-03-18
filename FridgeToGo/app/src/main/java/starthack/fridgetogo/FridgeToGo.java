@@ -127,28 +127,6 @@ public class FridgeToGo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    /*public void addMapping(long barcode, String ingredient){
-        barcodeMapping.add(barcode, ingredient);
-        refreshPreferences();
-    }
-
-    public static void addProduct(Product product){
-        products.add(product);
-        refreshPreferences();
-    }
-
-    public static List<Product> getProducts(){
-        return products;
-    }*/
-
-    /*public String getIngredient(int index){
-        return ingredientList.get(index);
-    }*/
-
-    /*public BarcodeMapping getBarcodeMapping(){
-        return barcodeMapping;
-    }*/
-
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         IntentResult scanningResult = IntentIntegrator.parseActivityResult(requestCode, resultCode, intent);
         if (scanningResult != null) {
@@ -270,7 +248,7 @@ public class FridgeToGo extends AppCompatActivity {
                 case 1:
                     fragment = ScanFragment.newInstance(); break;
                 case 2:
-                    fragment = MyFridgeFragment.newInstance(); break;
+                    fragment = SmartMealFragment.newInstance(); break;
                 case 3:
                     fragment = MyFridgeFragment.newInstance(); break;
             }

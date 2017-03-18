@@ -57,7 +57,7 @@ public class SmartMealFragment extends Fragment {
         }
         if(size > 1) {
             final String name2 = bests.get(1).getKey();
-            text1.setText("Meal suggestion 2 : " + name2);
+            text2.setText("Meal suggestion 2 : " + name2);
             button21.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -74,7 +74,7 @@ public class SmartMealFragment extends Fragment {
         }
         if(size > 2) {
             final String name3 = bests.get(2).getKey();
-            text1.setText("Meal suggestion 3 : " + name3);
+            text3.setText("Meal suggestion 3 : " + name3);
             button31.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

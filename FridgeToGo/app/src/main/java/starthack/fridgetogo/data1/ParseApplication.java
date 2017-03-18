@@ -1,4 +1,4 @@
-package starthack.fridgetogo.data;
+package starthack.fridgetogo.data1;
 
 import android.app.Application;
 

@@ -2,6 +2,7 @@ package starthack.fridgetogo;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,13 +56,15 @@ public class Suggester {
 
         //Now, order map to give best results
         ArrayList<Entry<String, Double>> toReturn = new ArrayList<>(map.entrySet());
-        toReturn.sort(new Comparator<Entry<String, Double>>(){
+
+        Collections.sort(toReturn, new Comparator<Entry<String, Double>>(){
             public int compare(Entry<String, Double> o1, Entry<String, Double> o2) {
                 if(o1.getValue() == o2.getValue())
                     return 0;
                 return (o1.getValue() < o2.getValue())? 1 : -1;
             }
         });
+
 
         return toReturn;
     }
@@ -110,7 +113,7 @@ public class Suggester {
 
         //Now, order map to give best results
         ArrayList<Entry<String, ArrayList<Double>>> toReturnn = new ArrayList<>(toReturn.entrySet());
-        toReturnn.sort(new Comparator<Entry<String, ArrayList<Double>>>(){
+        Collections.sort(toReturnn, new Comparator<Entry<String, ArrayList<Double>>>(){
             @Override
             public int compare(Entry<String, ArrayList<Double>> o1,Entry<String, ArrayList<Double>> o2) {
                 Double cheapCombination1 = o1.getValue().get(2);
