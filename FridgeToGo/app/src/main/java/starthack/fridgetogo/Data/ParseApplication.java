@@ -20,8 +20,9 @@ public class ParseApplication extends Application {
                 .server("https://my-parse-app-url.herokuapp.com/parse/").build());
         // Register your parse models
         IngredientTable.registerSubclass(IngredientTable.class);
-        // Add your initialization code here
-        Parse.initialize(this, "7zBztvyG4hYQ9XghgfqYxfRcL3SMBYWAj0GUL", "iZWhgJRu6yKm3iNMbTaguLcNCV3qedijWL");
+
+
+
     }
 
 
