@@ -100,7 +100,6 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
         return super.onOptionsItemSelected(item);
     }
 
-<<<<<<< HEAD
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.scan_button){
@@ -158,8 +157,6 @@ public class FridgeToGo extends AppCompatActivity implements OnClickListener {
             return rootView;
         }
     }
-=======
->>>>>>> 845e518138f4b107993df5c0583682d7b7c81f31
 
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
