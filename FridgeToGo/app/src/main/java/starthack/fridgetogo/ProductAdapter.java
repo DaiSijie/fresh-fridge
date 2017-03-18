@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.text.Format;
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 public class ProductAdapter extends ArrayAdapter<Product> {
@@ -15,8 +17,8 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         super(context, textViewResourceId);
     }
 
-    public ProductAdapter(Context context, int resource, List<Product> items) {
-        super(context, resource, items);
+    public ProductAdapter(Context context, int resource, List<Product> products) {
+        super(context, resource, products);
     }
 
     @Override
@@ -34,20 +36,17 @@ public class ProductAdapter extends ArrayAdapter<Product> {
 
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.id);
-            /*TextView tt2 = (TextView) v.findViewById(R.id.categoryId);
-            TextView tt3 = (TextView) v.findViewById(R.id.description);
+            TextView tt2 = (TextView) v.findViewById(R.id.peremptionDate);
 
             if (tt1 != null) {
-                tt1.setText(p.getId());
+                tt1.setText(p.getIngredient().getName());
             }
 
             if (tt2 != null) {
-                tt2.setText(p.getCategory().getId());
+                Format formatter = new SimpleDateFormat("yyyy-MM-dd");
+                String date = formatter.format(p.getPeremptionDate());
+                tt2.setText("will be rotten on " + date);
             }
-
-            if (tt3 != null) {
-                tt3.setText(p.getDescription());
-            }*/
         }
 
         return v;

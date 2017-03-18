@@ -60,6 +60,10 @@ public class FridgeToGo extends AppCompatActivity {
             products = gson.fromJson(json, listType);
         }
 
+        Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
+        Product product = new Product(ingredient, 2017, 12, 20, 2015, 12, 10, 22.5);
+        products.add(product);
+
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);

@@ -3,6 +3,8 @@ package starthack.fridgetogo;
 
 import android.util.Pair;
 
+import java.util.Map;
+
 public class Ingredient {
     private static String name;
     private static Pair quantity;
