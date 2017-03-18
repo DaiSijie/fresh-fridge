@@ -184,12 +184,13 @@ public class FridgeToGo extends AppCompatActivity {
 
         alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
-                String ingredient = Database.currentIngredient;
-                Database.putCodeToIngredient(ingredient, barcode);
-                Date peremptionDate = Calendar.getInstance().getTime();
-                peremptionDate.setTime(peremptionDate.getTime() + 100000000000l*(long)Math.random());
-                Database.putNewObjectInFridge(ingredient, peremptionDate);
-                refreshPreferences();
+                Database.barcode = barcode;
+                //String ingredient = Database.currentIngredient;
+                //Database.putCodeToIngredient(ingredient, barcode);
+                //Date peremptionDate = Calendar.getInstance().getTime();
+                //peremptionDate.setTime(peremptionDate.getTime() + 100000000000l*(long)Math.random());
+                //Database.putNewObjectInFridge(ingredient, peremptionDate);
+                //refreshPreferences();
             }
         });
 
@@ -300,7 +301,7 @@ public class FridgeToGo extends AppCompatActivity {
         }
     }
 
-    private static void refreshPreferences() {
+    public static void refreshPreferences() {
         Gson gson1 = new Gson();
         Gson gson2 = new Gson();
         String json1 = gson1.toJson(Database.fridgeContent);
