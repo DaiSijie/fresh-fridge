@@ -6,9 +6,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class MyFridgeFragment extends ListFragment {
@@ -31,10 +28,6 @@ public class MyFridgeFragment extends ListFragment {
 
         List<Product> products = Database.getFridgeAsProductList();
 
-
-        /*Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
-        Product product = new Product(ingredient, 2017, 12, 20, 2015, 12, 10, 22.5);
-        products.add(product);*/
 
         ProductAdapter adapter = new ProductAdapter(getContext(), R.layout.product_item, products);
         setListAdapter(adapter);

@@ -4,9 +4,9 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 public class Product {
-    private static String ingredient;
-    private static Date peremptionDate;
-    private static Date creationDate;
+    private String ingredient;
+    private Date peremptionDate;
+    private Date creationDate;
 
     public Product(String ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
                    int creationYear, int creationMonth, int creationDay) {

@@ -33,6 +33,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
@@ -48,17 +49,6 @@ public class FridgeToGo extends AppCompatActivity {
     private static SharedPreferences.Editor mEditor;
     private static List<Product> products = new ArrayList<Product>();
     private static BarcodeMapping barcodeMapping = new BarcodeMapping();
-    /*private static final String[] ingredients = {"Curry","Nuts","White wine","Potatoes","Pepper",
-            "Bacon","Vinegar","Pecorino","Lemon","Veal","Sour cream","Celery","Beef sirloin",
-            "Basilic","Cocoa powder","Beef Jerky","Lasagna noodles","Vanilla extract","Tomatoes",
-            "Mascarpone","Shrimp","Milk","Sausage","Ketchup","Onion","Baking soda","Flour",
-            "Broccoli","Tuna","Green peas","Parmesan","Raclette","Avocado","Chicken","Parsley",
-            "Whipped cream","Paris mushroom","Ground beef","Mozzarella","Sesame seeds","Yogurt",
-            "Pignons","Red wine","Coffee","Kale","Corn Flakes","Toast","Red bel pepper",
-            "Coconut milk","Cabbage","Sugar","Rice","Pizza dough","Egg","Fondue cheese","Butter",
-            "Buns","Chocolate","Biscuits","Olives","Olive oil","Mayo","Fajita bread","Carrots",
-            "Ham","Garlic","Pasta","Mustard"};*/
-    /*private static final ArrayList<String> ingredientList = new ArrayList<>(Arrays.asList(ingredients));*/
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -88,16 +78,16 @@ public class FridgeToGo extends AppCompatActivity {
 
         Gson productsGson = new Gson();
         String json1 = mPrefs.getString(PRODUCTS_PREFS, "");
-        Type productsType = new TypeToken<ArrayList<Product>>(){}.getType();
+        Type productsType = new TypeToken<HashMap<String, ArrayList<Date>>>(){}.getType();
         if (!json1.isEmpty()){
-            products = productsGson.fromJson(json1, productsType);
+            Database.fridgeContent = productsGson.fromJson(json1, productsType);
         }
 
         Gson mappingGson = new Gson();
         String json2 = mPrefs.getString(MAPPING_PREFS, "");
-        Type mappingType = new TypeToken<BarcodeMapping>(){}.getType();
+        Type mappingType = new TypeToken<HashMap<Long, String>>(){}.getType();
         if (!json2.isEmpty()){
-            barcodeMapping = mappingGson.fromJson(json2, mappingType);
+            Database.barcodeToIngredient = mappingGson.fromJson(json2, mappingType);
         }
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -199,6 +189,7 @@ public class FridgeToGo extends AppCompatActivity {
                 Date peremptionDate = Calendar.getInstance().getTime();
                 peremptionDate.setTime(peremptionDate.getTime() + 100000000000l*(long)Math.random());
                 Database.putNewObjectInFridge(ingredient, peremptionDate);
+                refreshPreferences();
             }
         });
 
@@ -222,7 +213,7 @@ public class FridgeToGo extends AppCompatActivity {
                 Toast.makeText(parent.getContext(), "Clicked : " +
                         parent.getItemAtPosition(pos).toString(), Toast.LENGTH_LONG).show();
 
-                Database.currentIngredient = (String)parent.getItemAtPosition(pos);
+                Database.currentIngredient = ((String)parent.getItemAtPosition(pos));
             }
 
             @Override
@@ -312,8 +303,8 @@ public class FridgeToGo extends AppCompatActivity {
     private static void refreshPreferences() {
         Gson gson1 = new Gson();
         Gson gson2 = new Gson();
-        String json1 = gson1.toJson(products);
-        String json2 = gson2.toJson(barcodeMapping);
+        String json1 = gson1.toJson(Database.fridgeContent);
+        String json2 = gson2.toJson(Database.barcodeToIngredient);
 
 
         mEditor.putString(PRODUCTS_PREFS, json1);
