@@ -3,22 +3,50 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
 
+    <Button android:id="@+id/scan_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Scan"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        style="@style/Widget.AppCompat.Button" />
+
     <TextView
         android:id="@+id/scan_content"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textIsSelectable="true"
+        android:textIsSelectable="false"
+        android:layout_gravity="center"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="60dp"
-        android:layout_below="@string/scan_button" />
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:includeFontPadding="false" />
 
-    <Button android:id="@+id/scan_button"
+    <Button android:id="@+id/ok_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="string/scan"
-        android:layout_below="@+id/scan_content"
+        android:text="OK"
+        android:layout_gravity="center|bottom"
+        android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        style="@style/Widget.AppCompat.Button" />
+        android:layout_marginBottom="35dp"/>
+    <Button
+        android:id="@+id/minus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_toLeftOf="@+id/plus_button"
+        android:layout_toStartOf="@+id/scan_button"
+        android:text="-" />
+
+    <Button
+        android:id="@+id/plus_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/minus_button"
+        android:layout_toEndOf="@+id/scan_button"
+        android:layout_toRightOf="@+id/scan_button"
+        android:text="+" />
+
 
 </RelativeLayout>
