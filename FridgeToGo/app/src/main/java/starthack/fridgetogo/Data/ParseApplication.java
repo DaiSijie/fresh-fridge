@@ -1,4 +1,4 @@
-package starthack.fridgetogo;
+package starthack.fridgetogo.Data;
 
 import android.app.Application;
 
@@ -18,5 +18,11 @@ public class ParseApplication extends Application {
                 .clientKey(null)  // set explicitly unless clientKey is explicitly configured on Parse server
                 .addNetworkInterceptor(new ParseLogInterceptor())
                 .server("https://my-parse-app-url.herokuapp.com/parse/").build());
+        // Register your parse models
+        IngredientTable.registerSubclass(IngredientTable.class);
+        // Add your initialization code here
+        Parse.initialize(this, "7zBztvyG4hYQ9XghgfqYxfRcL3SMBYWAj0GUL", "iZWhgJRu6yKm3iNMbTaguLcNCV3qedijWL");
     }
+
+
 }
