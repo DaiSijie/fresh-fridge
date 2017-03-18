@@ -114,6 +114,7 @@ public class FridgeToGo extends AppCompatActivity {
 
     public void addMapping(long barcode, Ingredient ingredient){
         barcodeMapping.add(barcode, ingredient);
+        refreshPreferences();
     }
 
     public void addProduct(Product product){

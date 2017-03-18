@@ -7,7 +7,7 @@ import java.util.Map;
 
 public class Ingredient {
     private static String name;
-    private static Pair quantity;
+    private static Pair<Integer, Boolean> quantity;
     private static Boolean inFridge;
     private static int minTemp;
     private static int maxTemp;
@@ -37,7 +37,7 @@ public class Ingredient {
         return name;
     }
 
-    public Pair getQuantity(){
+    public Pair<Integer, Boolean> getQuantity(){
         return quantity;
     }
 

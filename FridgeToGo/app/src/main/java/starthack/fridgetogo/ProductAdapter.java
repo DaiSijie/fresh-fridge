@@ -1,6 +1,7 @@
 package starthack.fridgetogo;
 
 import android.content.Context;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -37,6 +38,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         if (p != null) {
             TextView tt1 = (TextView) v.findViewById(R.id.id);
             TextView tt2 = (TextView) v.findViewById(R.id.peremptionDate);
+            TextView tt3 = (TextView) v.findViewById(R.id.quantity);
 
             if (tt1 != null) {
                 tt1.setText(p.getIngredient().getName());
@@ -46,6 +48,17 @@ public class ProductAdapter extends ArrayAdapter<Product> {
                 Format formatter = new SimpleDateFormat("yyyy-MM-dd");
                 String date = formatter.format(p.getPeremptionDate());
                 tt2.setText("will be rotten on " + date);
+            }
+
+            if (tt3 != null) {
+                Pair quantity = p.getIngredient().getQuantity();
+                String text = quantity.first.toString();
+                if((boolean)quantity.second){
+                    text = text + "g";
+                } else {
+                    text = text + "ml";
+                }
+                tt3.setText(text);
             }
         }
 
