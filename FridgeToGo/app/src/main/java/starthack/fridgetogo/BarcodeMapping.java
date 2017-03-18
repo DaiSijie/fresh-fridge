@@ -15,6 +15,10 @@ public class BarcodeMapping {
     }
 
     public Ingredient findBarcode(long barcode){
-        mapping.get(barcode)
+        return mapping.get(barcode);
+    }
+
+    public void add(long barcode, Ingredient ingredient){
+        mapping.put(barcode, ingredient);
     }
 }

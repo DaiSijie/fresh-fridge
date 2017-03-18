@@ -23,9 +23,12 @@ import java.util.List;
 public class FridgeToGo extends AppCompatActivity {
     private static final String PREFS = "prefs";
     private static final String PRODUCTS_PREFS = "productPrefs";
+    private static final String MAPPING_PREFS = "mappingPrefs";
+
     private static SharedPreferences mPrefs;
     private static SharedPreferences.Editor mEditor;
     private List<Product> products = new ArrayList<Product>();
+    private BarcodeMapping barcodeMapping = new BarcodeMapping();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -53,11 +56,18 @@ public class FridgeToGo extends AppCompatActivity {
         mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         mEditor = mPrefs.edit();
 
-        Gson gson = new Gson();
-        String json = mPrefs.getString(PRODUCTS_PREFS, "");
-        Type listType = new TypeToken<ArrayList<Product>>(){}.getType();
-        if (!json.isEmpty()){
-            products = gson.fromJson(json, listType);
+        Gson productsGson = new Gson();
+        String json1 = mPrefs.getString(PRODUCTS_PREFS, "");
+        Type productsType = new TypeToken<ArrayList<Product>>(){}.getType();
+        if (!json1.isEmpty()){
+            products = productsGson.fromJson(json1, productsType);
+        }
+
+        Gson mappingGson = new Gson();
+        String json2 = mPrefs.getString(PRODUCTS_PREFS, "");
+        Type mappingType = new TypeToken<BarcodeMapping>(){}.getType();
+        if (!json2.isEmpty()){
+            products = mappingGson.fromJson(json2, mappingType);
         }
 
         Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
@@ -102,8 +112,21 @@ public class FridgeToGo extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    public void addMapping(long barcode, Ingredient ingredient){
+        barcodeMapping.add(barcode, ingredient);
+    }
+
+    public void addProduct(Product product){
+        products.add(product);
+        refreshPreferences();
+    }
+
     public List<Product> getProducts(){
         return products;
+    }
+
+    public BarcodeMapping getBarcodeMapping(){
+        return barcodeMapping;
     }
 
     /**
@@ -155,10 +178,15 @@ public class FridgeToGo extends AppCompatActivity {
         }
     }
 
-    private void addToSharedPreferences() {
-        Gson gson = new Gson();
-        String json = gson.toJson(products);
-        mEditor.putString(PRODUCTS_PREFS, json);
+    private void refreshPreferences() {
+        Gson gson1 = new Gson();
+        Gson gson2 = new Gson();
+        String json1 = gson1.toJson(products);
+        String json2 = gson2.toJson(barcodeMapping);
+
+
+        mEditor.putString(PRODUCTS_PREFS, json1);
+        mEditor.putString(MAPPING_PREFS, json2);
         mEditor.commit();
     }
 }

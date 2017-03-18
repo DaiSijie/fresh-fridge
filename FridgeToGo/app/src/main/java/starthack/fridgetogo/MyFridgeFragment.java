@@ -1,13 +1,10 @@
 package starthack.fridgetogo;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.ListFragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Toast;
 
 import java.util.List;
 
@@ -31,9 +28,9 @@ public class MyFridgeFragment extends ListFragment {
 
         List<Product> products = ((FridgeToGo)getActivity()).getProducts();
 
-        Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
+        /*Ingredient ingredient = new Ingredient("Yogurt", 250, true, true, 0, 10, -1, -1);
         Product product = new Product(ingredient, 2017, 12, 20, 2015, 12, 10, 22.5);
-        products.add(product);
+        products.add(product);*/
 
         ProductAdapter adapter = new ProductAdapter(getContext(), R.layout.product_item, products);
         setListAdapter(adapter);

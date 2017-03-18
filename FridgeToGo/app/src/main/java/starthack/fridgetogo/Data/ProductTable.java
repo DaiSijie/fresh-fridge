@@ -1,10 +1,12 @@
 package starthack.fridgetogo.Data;
 
-import com.parse.ParseObject;
 import com.parse.ParseClassName;
+import com.parse.ParseObject;
 
 import java.util.Date;
 import java.util.GregorianCalendar;
+
+import starthack.fridgetogo.data.IngredientTable;
 
 
 @ParseClassName("ProductTable")
@@ -15,7 +17,7 @@ public class ProductTable extends ParseObject {
     }
 
     public ProductTable(IngredientTable ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
-                   int creationYear, int creationMonth, int creationDay, double price) {
+                        int creationYear, int creationMonth, int creationDay, double price) {
         super();
         setBarCode(ingredient.getBarCode());
         setPeremptionDate(new GregorianCalendar(peremptionYear, peremptionMonth, peremptionDay).getTime());

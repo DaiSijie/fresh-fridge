@@ -13,7 +13,15 @@ public class Product {
                    int creationYear, int creationMonth, int creationDay, double price) {
         this.ingredient = ingredient;
         this.peremptionDate = new GregorianCalendar(peremptionYear, peremptionMonth, peremptionDay).getTime();
-        this.peremptionDate = new GregorianCalendar(creationYear, creationMonth, creationDay).getTime();
+        this.creationDate = new GregorianCalendar(creationYear, creationMonth, creationDay).getTime();
+        this.price = price;
+    }
+
+    public Product(Ingredient ingredient, int peremptionYear, int peremptionMonth, int peremptionDay,
+                   Date creationDate, double price) {
+        this.ingredient = ingredient;
+        this.peremptionDate = new GregorianCalendar(peremptionYear, peremptionMonth, peremptionDay).getTime();
+        this.creationDate = creationDate;
         this.price = price;
     }
 
