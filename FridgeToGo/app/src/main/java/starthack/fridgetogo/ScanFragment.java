@@ -3,7 +3,8 @@ package starthack.fridgetogo;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
-import android.app.Fragment;
+import android.support.annotation.Nullable;
+import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -72,18 +73,12 @@ public class ScanFragment extends Fragment implements OnClickListener {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
-
-        scanBtn = (Button)getView().findViewById(R.id.scan_button);
-        formatTxt = (TextView)getView().findViewById(R.id.scan_format);
-        contentTxt = (TextView)getView().findViewById(R.id.scan_content);
-
-        scanBtn.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view) {
         if(view.getId()==R.id.scan_button){
-            IntentIntegrator scanIntegrator = new IntentIntegrator((Fragment) this);
+            IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
             scanIntegrator.initiateScan();
         }
     }
@@ -108,6 +103,16 @@ public class ScanFragment extends Fragment implements OnClickListener {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_scan, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        scanBtn = (Button)getView().findViewById(R.id.scan_button);
+        formatTxt = (TextView)getView().findViewById(R.id.scan_format);
+        contentTxt = (TextView)getView().findViewById(R.id.scan_content);
+
+        scanBtn.setOnClickListener(this);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
