@@ -133,7 +133,7 @@ public class FridgeToGo extends AppCompatActivity {
             String scanContent = scanningResult.getContents();
             long barcode = Long.parseLong(scanContent);
             String ingredient = Database.getIngredientFromCode(barcode);
-            if(ingredient == null){
+            if(ingredient == null){TextView
                 addAllInfo(Database.getIngredientList(), barcode);
             } else{
                 addProductInfo(ingredient);
