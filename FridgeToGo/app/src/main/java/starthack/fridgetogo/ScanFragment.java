@@ -12,8 +12,6 @@ import android.view.ViewGroup;
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
 
-import android.os.Bundle;
-import android.app.Activity;
 import android.content.Intent;
 import android.view.View.OnClickListener;
 import android.widget.Button;
