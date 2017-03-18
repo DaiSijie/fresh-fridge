@@ -2,13 +2,13 @@ package starthack.fridgetogo;
 
 public class MessageHandler {
 
-    enum Light {
-        RED, ORANGE, YELLOW
-    }
+    public final int RED = 0;
+    public final int ORANGE = 1;
+    public final int YELLOW = 2;
 
-    private  Light light;
-    private  UDPServer server;
-    private  UDPClient client;
+    private int light;
+    private UDPServer server;
+    private UDPClient client;
     private long [] info;
 
     public MessageHandler(UDPClient client, UDPServer server) throws Exception {
@@ -17,6 +17,7 @@ public class MessageHandler {
 
         this.client = client;
         this.server = server;
+        this.info = new long[2];
     }
 
     public long[] getInfo(UDPServer server) throws Exception{
@@ -24,8 +25,6 @@ public class MessageHandler {
         long temperature = getTemperature(message);
         long humidity = getHumidity(message);
 
-        long[] info = new long[2];
-        this.info = info;
         info[0] = temperature;
         info[1] = humidity;
         return info;
@@ -44,13 +43,12 @@ public class MessageHandler {
         return humidity;
     }
 
-    public void setLight(Light newLight) {
+    public void setLight(int newLight) {
         light = newLight;
     }
 
     public void sendChangeDiode() throws Exception {
-        client.sendMessage(light.toString());
-        client.close();
+        client.sendMessage(Integer.toString(light));
     }
 
 }
