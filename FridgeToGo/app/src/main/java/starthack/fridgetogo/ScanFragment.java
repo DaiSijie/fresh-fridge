@@ -1,10 +1,12 @@
 package starthack.fridgetogo;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -98,6 +100,18 @@ public class ScanFragment extends Fragment implements OnClickListener {
         scanBtn = (Button)getView().findViewById(R.id.scan_button);
 
         scanBtn.setOnClickListener(this);
+
+        Button addInfoButton = (Button) getView().findViewById(R.id.add_info_button);
+        addInfoButton.setOnClickListener(new View.OnClickListener() {
+            public void onClick(View view) {
+
+                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+                alertDialog.setTitle("Add the ingredient");
+
+                alertDialog.show();  //<-- See This!
+            }
+
+        });
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -106,6 +120,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
             mListener.onFragmentInteraction(uri);
         }
     }
+
 
     /**
      * This interface must be implemented by activities that contain this
