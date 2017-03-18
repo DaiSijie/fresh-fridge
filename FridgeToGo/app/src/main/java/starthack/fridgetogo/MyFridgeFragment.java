@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import java.util.List;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -53,6 +55,14 @@ public class MyFridgeFragment extends Fragment {
         if (mListener != null) {
             mListener.onFragmentInteraction(uri);
         }
+    }
+
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+
+        List<Product> products = ((FridgeToGo)getActivity()).getProducts();
+        final ProductAdapter productAdapter = new ProductAdapter(getActivity(),
+                android.R.layout.simple_list_item_1, products);
     }
 
     /**

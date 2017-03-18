@@ -24,7 +24,8 @@ public class FridgeToGo extends AppCompatActivity {
     private static final String PREFS = "prefs";
     private static final String PRODUCTS_PREFS = "productPrefs";
     private static SharedPreferences mPrefs;
-    private static SharedPreferences.Editor editor;
+    private static SharedPreferences.Editor mEditor;
+    private List<Product> products = new ArrayList<Product>();
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -50,9 +51,8 @@ public class FridgeToGo extends AppCompatActivity {
 
         // Restore preferences
         mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
-        editor = mPrefs.edit();
+        mEditor = mPrefs.edit();
 
-        List<Product> products = new ArrayList<Product>();
         Gson gson = new Gson();
         String json = mPrefs.getString(PRODUCTS_PREFS, "");
         Type listType = new TypeToken<ArrayList<Product>>(){}.getType();
@@ -96,6 +96,10 @@ public class FridgeToGo extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public List<Product> getProducts(){
+        return products;
     }
 
     /**
@@ -145,5 +149,12 @@ public class FridgeToGo extends AppCompatActivity {
             }
             return null;
         }
+    }
+
+    private void addToSharedPreferences() {
+        Gson gson = new Gson();
+        String json = gson.toJson(products);
+        mEditor.putString(PRODUCTS_PREFS, json);
+        mEditor.commit();
     }
 }
