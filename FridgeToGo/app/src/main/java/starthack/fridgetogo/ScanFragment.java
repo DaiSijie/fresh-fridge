@@ -81,7 +81,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
             content = Long.parseLong(scanContent);
             Ingredient ingredient = barcodeMapping.findBarcode(content);
             if(ingredient == null){
-                
+                addAllInfo(((FridgeToGo)getActivity()).getProducts());
 
                 ingredient = new Ingredient("Yog", 225, true, true, -1, -1, -1, -1);
                 Product product = new Product(ingredient, 2001, 1, 1, 2000, 2, 2, 3.2);
@@ -119,28 +119,21 @@ public class ScanFragment extends Fragment implements OnClickListener {
     }
 
     public void addAllInfo(final List<Product> products) {
-        Button addInfoButton = (Button) getView().findViewById(R.id.add_info_button);
-        addInfoButton.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View view) {
+        AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
+        alertDialog.setTitle("Add the ingredient information");
 
-                AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("Add the ingredient information");
-
-                String [] productNames = getProductNames(products);
-                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+        String [] productNames = getProductNames(products);
+        final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
                         android.R.layout.simple_spinner_item, productNames);
 
-                final Spinner sp = new Spinner(getActivity());
-                sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
-                sp.setAdapter(adapter);
+        final Spinner sp = new Spinner(getActivity());
+        sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+        sp.setAdapter(adapter);
 
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setView(sp);
-                builder.create().show();
-                alertDialog.show();
-            }
-
-        });
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setView(sp);
+        builder.create().show();
+        alertDialog.show();
     }
 
     private String[] getProductNames(List<Product> products) {
