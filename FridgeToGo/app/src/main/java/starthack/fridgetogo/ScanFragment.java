@@ -104,7 +104,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
     }
 
     private String niceOutput(Date d){
-        return d.getDay() + "/" + d.getMonth() + "/" + d.getYear();
+        return (d.getDate() + 1) + "/" + (d.getMonth() + 1) + "/" + (1900 + d.getYear());
     }
 
 
