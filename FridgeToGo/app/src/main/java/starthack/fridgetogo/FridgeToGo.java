@@ -163,6 +163,7 @@ public class FridgeToGo extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Database.barcode = barcode;
+                Database.currentIngredient = ((String)parent.getItemAtPosition(pos));
                 //String ingredient = Database.currentIngredient;
                 //Database.putCodeToIngredient(ingredient, barcode);
                 //Date peremptionDate = Calendar.getInstance().getTime();
