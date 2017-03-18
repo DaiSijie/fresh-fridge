@@ -69,7 +69,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
         }if(view.getId()==R.id.ok_button){
             String ingredient = Database.currentIngredient;
             Database.putCodeToIngredient(ingredient, Database.barcode);
-            Database.putNewObjectInFridge(ingredient, chosenDate);
+            Database.putNewObjectInFridge(ingredient, new Date(chosenDate.getYear(), ));
             FridgeToGo.refreshPreferences();
         }
 
