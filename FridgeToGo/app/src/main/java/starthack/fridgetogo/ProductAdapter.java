@@ -27,7 +27,7 @@ public class ProductAdapter extends ArrayAdapter<Product> {
         if (v == null) {
             LayoutInflater vi;
             vi = LayoutInflater.from(getContext());
-            v = vi.inflate(R.layout.itemlistrow, null);
+            v = vi.inflate(R.layout.itemlistrow,null);
         }
 
         Product p = getItem(position);

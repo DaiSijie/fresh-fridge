@@ -101,7 +101,6 @@ public class ScanFragment extends Fragment implements OnClickListener {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         scanBtn = (Button)getView().findViewById(R.id.scan_button);
-        formatTxt = (TextView)getView().findViewById(R.id.scan_format);
         contentTxt = (TextView)getView().findViewById(R.id.scan_content);
 
         scanBtn.setOnClickListener(this);
