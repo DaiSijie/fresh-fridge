@@ -13,6 +13,10 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import com.google.gson.Gson;
+
+import java.util.Date;
+
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
 
 /**
@@ -31,7 +35,9 @@ public class ScanFragment extends Fragment implements OnClickListener {
     private Button plusButton;
     private Button minusButton;
     private Button okButton;
+    private Date chosenDate;
     private Spinner spinner;
+    private TextView text;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -56,15 +62,22 @@ public class ScanFragment extends Fragment implements OnClickListener {
             scanIntegrator.initiateScan();
         }
         if(view.getId()==R.id.plus_button){
-            Log.d("fff", "plus was pressed");
+            chosenDate.setDate(chosenDate.getDate() + 1);
+            text.setText(niceOutput(chosenDate));
+
         }
         if(view.getId()==R.id.minus_button){
-            Log.d("fff", "minus was pressed");
+            chosenDate.setDate(chosenDate.getDate() - 1);
+            text.setText(niceOutput(chosenDate));
         }if(view.getId()==R.id.ok_button){
-            Log.d("fff", "ok was pressed");
+            String ingredient = Database.currentIngredient;
+            Database.putCodeToIngredient(ingredient, Database.barcode);
+            Database.putNewObjectInFridge(ingredient, chosenDate);
+            FridgeToGo.refreshPreferences();
         }
 
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -79,8 +92,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
         scanBtn = (Button)getView().findViewById(R.id.scan_button);
         scanBtn.setOnClickListener(this);
 
-        TextView text = (TextView)getView().findViewById(R.id.scan_content);
-        text.setText("11/02/17");
+        text = (TextView)getView().findViewById(R.id.scan_content);
+        text.setText(niceOutput(chosenDate));
 
         plusButton = (Button)getView().findViewById(R.id.plus_button);
         plusButton.setOnClickListener(this);
@@ -92,6 +105,12 @@ public class ScanFragment extends Fragment implements OnClickListener {
         okButton.setOnClickListener(this);
 
     }
+
+    private String niceOutput(Date d){
+        return d.getDay() + "/" + d.getMonth() + "/" + d.getYear();
+    }
+
+
 
     // TODO: Rename method, update argument and hook method into UI event
     public void onButtonPressed(Uri uri) {

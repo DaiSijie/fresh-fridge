@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class Database {
 
+    public static Long barcode;
+
+
     //THIS SHOULD BE HARDCODED
     private static ArrayList<String> ingredient = fillStuff1();
     private static ArrayList<String> dishNames = fillStuff3();
