@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.ActionBar;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,6 +21,16 @@ import java.util.Date;
 
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
+
+import android.content.Intent;
+import android.view.View.OnClickListener;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.RelativeLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -36,6 +47,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
 
     private Button scanBtn;
     private long content;
+    private Spinner spinner;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -104,17 +116,40 @@ public class ScanFragment extends Fragment implements OnClickListener {
 
         scanBtn.setOnClickListener(this);
 
+    }
+
+    public void addAllInfo(final List<Product> products) {
         Button addInfoButton = (Button) getView().findViewById(R.id.add_info_button);
         addInfoButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View view) {
 
                 AlertDialog alertDialog = new AlertDialog.Builder(getActivity()).create();
-                alertDialog.setTitle("Add the ingredient");
+                alertDialog.setTitle("Add the ingredient information");
 
-                alertDialog.show();  //<-- See This!
+                String [] productNames = getProductNames(products);
+                final ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(),
+                        android.R.layout.simple_spinner_item, productNames);
+
+                final Spinner sp = new Spinner(getActivity());
+                sp.setLayoutParams(new RelativeLayout.LayoutParams(ActionBar.LayoutParams.WRAP_CONTENT, ActionBar.LayoutParams.WRAP_CONTENT));
+                sp.setAdapter(adapter);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setView(sp);
+                builder.create().show();
+                alertDialog.show();
             }
 
         });
+    }
+
+    private String[] getProductNames(List<Product> products) {
+        String [] productsName = new String [products.size()];
+
+        for(int i = 0; i < products.size(); ++i) {
+            productsName[i] = products.get(i).getIngredient().getName();
+        }
+        return productsName;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
