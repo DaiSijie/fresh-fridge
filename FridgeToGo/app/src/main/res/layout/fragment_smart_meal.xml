@@ -47,7 +47,9 @@
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:text="I like!"
-        android:textColorLink="@android:color/holo_green_dark" />
+        android:textColorLink="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:id="@+id/button12"
@@ -58,8 +60,9 @@
         android:layout_marginStart="13dp"
         android:layout_toEndOf="@+id/button11"
         android:layout_toRightOf="@+id/button11"
-        android:text="Beurk!"
-        android:textColorLink="@android:color/holo_red_dark" />
+        android:text="Ew!"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:background="@android:color/holo_red_light" />
 
     <Button
         android:id="@+id/button21"
@@ -69,7 +72,9 @@
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:text="I like!"
-        android:textColorLink="@android:color/holo_green_dark" />
+        android:textColorLink="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light"
+        android:textColor="@android:color/background_light" />
 
     <Button
         android:id="@+id/button22"
@@ -80,8 +85,9 @@
         android:layout_marginStart="13dp"
         android:layout_toEndOf="@+id/button21"
         android:layout_toRightOf="@+id/button21"
-        android:text="Beurk!"
-        android:textColorLink="@android:color/holo_red_dark" />
+        android:text="EW!"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:background="@android:color/holo_red_light" />
 
     <Button
         android:id="@+id/button31"
@@ -92,7 +98,8 @@
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:text="I like!"
-        android:textColorLink="@android:color/holo_green_dark" />
+        android:textColorLink="@android:color/holo_green_dark"
+        android:background="@android:color/holo_green_light" />
 
     <Button
         android:id="@+id/button32"
@@ -104,7 +111,9 @@
         android:layout_marginStart="13dp"
         android:layout_toEndOf="@+id/button31"
         android:layout_toRightOf="@+id/button31"
-        android:text="Beurk!"
-        android:textColorLink="@android:color/holo_red_dark" />
+        android:text="EW!"
+        android:textColorLink="@android:color/holo_red_dark"
+        android:background="@android:color/holo_red_light"
+        android:textColor="@android:color/background_dark" />
 
 </RelativeLayout>

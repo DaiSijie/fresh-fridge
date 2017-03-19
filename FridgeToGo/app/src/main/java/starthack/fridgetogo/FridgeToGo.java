@@ -89,8 +89,6 @@ public class FridgeToGo extends AppCompatActivity {
         // Restore preferences
         mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         mEditor = mPrefs.edit();
-        mEditor.clear();
-        mEditor.commit();
 
         Gson productsGson = new Gson();
         String json1 = mPrefs.getString(PRODUCTS_PREFS, "");

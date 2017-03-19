@@ -1,11 +1,12 @@
 package starthack.fridgetogo;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 
@@ -34,30 +35,35 @@ public class InfoFragment extends Fragment {
 
         TextView temperature = (TextView)view.findViewById(R.id.temperature);
         TextView humidity = (TextView)view.findViewById(R.id.humidity);
-        Button state = (Button)view.findViewById(R.id.state);
 
         double temperatureInDegrees = Database.getTemperature()/1000.0;
         temperature.setText("Temperature : " + temperatureInDegrees + "°C");
         humidity.setText("Humidity : " + Database.getHumidity() + "%");
 
         int color;
+        String goodness;
         switch(getHappinness(temperatureInDegrees)){
             case 0:
-                color = Integer.parseInt("F44336", 16);
+                color = 0xF44336;
+                goodness = "bad";
                 break;
             case 1:
-                color = Integer.parseInt("FF9800", 16);
+                color = 0xFF9800;
+                goodness = "so-so";
                 break;
             case 2:
-                color = Integer.parseInt("00E676", 16);
+                color = 0x00E676;
+                goodness = "good";
                 break;
             default:
-                color = Integer.parseInt("00BCD4", 16);
+                color = 0x00BCD4;
+                goodness = "not known";
                 break;
         }
 
-        state.setBackgroundColor(color);
-
+        TextView state = (TextView)view.findViewById(R.id.status);
+        state.setText("Status : " + goodness);
+        //state.setBackgroundColor(color);
 
         return view;
     }
