@@ -14,6 +14,8 @@ import java.util.Map;
 
 public class Database {
 
+    public static XDKThread t;
+
     public static Long barcode;
 
     public static boolean shoppingMode = false;
@@ -41,10 +43,17 @@ public class Database {
         return quotes;
     }
 
+    public static HashMap<String, ArrayList<Date>> getCart(){
+        return cartContent;
+    }
+
+
+
     public static void putInCart(String name, Date date) {
         if (!cartContent.containsKey(name))
             cartContent.put(name, new ArrayList<Date>());
         cartContent.get(name).add(date);
+        t.addCartElement(name);
     }
 
     public static void throwCartInFridge(){
@@ -55,6 +64,7 @@ public class Database {
         }
 
         cartContent = new HashMap<>();
+        t.flushCart();
     }
 
 

@@ -1,13 +1,10 @@
 package starthack.fridgetogo;
 
-import android.app.DatePickerDialog;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.TabLayout;
-import android.support.v4.app.DialogFragment;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -21,7 +18,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.DatePicker;
 import android.widget.Spinner;
 import android.widget.Toast;
 
@@ -30,11 +26,10 @@ import com.google.gson.reflect.TypeToken;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentIntegrator;
 import starthack.fridgetogo.com.google.zxing.integration.android.IntentResult;
@@ -49,6 +44,7 @@ public class FridgeToGo extends AppCompatActivity {
     private static SharedPreferences.Editor mEditor;
     private static List<Product> products = new ArrayList<Product>();
     private static BarcodeMapping barcodeMapping = new BarcodeMapping();
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -71,6 +67,24 @@ public class FridgeToGo extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_fridge_to_go);
+
+        ArrayList<String> cart = new ArrayList<>();
+        for(Map.Entry<String, ArrayList<Date>> ee: Database.getCart().entrySet()){
+            cart.add(ee.getKey());
+        }
+
+        HashMap<String, Double> maxM = new HashMap<String, Double>();
+        HashMap<String, Double> minM = new HashMap<String, Double>();
+
+        for(String s: Database.getIngredientList()){
+            maxM.put(s, Database.getMaxForIngredient(s));
+            minM.put(s, Database.getMinForIngredient(s));
+        }
+
+
+
+        Database.t = new XDKThread("XDK", cart, maxM, minM);
+        Database.t.start();
 
         // Restore preferences
         mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
