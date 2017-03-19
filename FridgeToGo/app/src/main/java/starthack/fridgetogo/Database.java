@@ -7,6 +7,7 @@ import java.util.Arrays;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.locks.ReentrantLock;
 
 /**
  * Created by thity27 on 18.03.17.
@@ -14,8 +15,31 @@ import java.util.Map;
 
 public class Database {
 
-    public static boolean someChange1 = true;
-    public static boolean someChange2 = true;
+    public static ReentrantLock lock = new ReentrantLock();
+    public static Long humidity;
+    public static Long temperature;
+
+    public static Long getHumidity(){
+        Long out = 0L;
+        lock.lock();
+        try{
+            out = humidity;
+        }finally{
+            lock.unlock();
+        }
+        return out;
+    }
+
+    public static Long getTemperature(){
+        Long out = 0L;
+        lock.lock();
+        try{
+            out = temperature;
+        }finally{
+            lock.unlock();
+        }
+        return out;
+    }
 
     public static XDKThread t;
 
