@@ -75,6 +75,8 @@ public class FridgeToGo extends AppCompatActivity {
         // Restore preferences
         mPrefs = getSharedPreferences(PREFS, MODE_PRIVATE);
         mEditor = mPrefs.edit();
+        mEditor.clear();
+        mEditor.commit();
 
         Gson productsGson = new Gson();
         String json1 = mPrefs.getString(PRODUCTS_PREFS, "");
@@ -133,7 +135,7 @@ public class FridgeToGo extends AppCompatActivity {
             String scanContent = scanningResult.getContents();
             long barcode = Long.parseLong(scanContent);
             String ingredient = Database.getIngredientFromCode(barcode);
-            if(ingredient == null){TextView
+            if(ingredient == null){
                 addAllInfo(Database.getIngredientList(), barcode);
             } else{
                 addProductInfo(ingredient);
@@ -163,13 +165,6 @@ public class FridgeToGo extends AppCompatActivity {
         alertDialogBuilder.setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int which) {
                 Database.barcode = barcode;
-                //Database.currentIngredient = ((String)parent.getItemAtPosition(pos));
-                //String ingredient = Database.currentIngredient;
-                //Database.putCodeToIngredient(ingredient, barcode);
-                //Date peremptionDate = Calendar.getInstance().getTime();
-                //peremptionDate.setTime(peremptionDate.getTime() + 100000000000l*(long)Math.random());
-                //Database.putNewObjectInFridge(ingredient, peremptionDate);
-                //refreshPreferences();
             }
         });
 
@@ -252,7 +247,7 @@ public class FridgeToGo extends AppCompatActivity {
                 case 2:
                     fragment = SmartMealFragment.newInstance(); break;
                 case 3:
-                    fragment = MyFridgeFragment.newInstance(); break;
+                    fragment = SmartPurchaseFragment.newInstance(); break;
             }
 
             return fragment;

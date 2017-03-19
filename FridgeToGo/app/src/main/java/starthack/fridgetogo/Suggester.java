@@ -1,5 +1,7 @@
 package starthack.fridgetogo;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -59,9 +61,7 @@ public class Suggester {
 
         Collections.sort(toReturn, new Comparator<Entry<String, Double>>(){
             public int compare(Entry<String, Double> o1, Entry<String, Double> o2) {
-                if(o1.getValue() == o2.getValue())
-                    return 0;
-                return (o1.getValue() < o2.getValue())? 1 : -1;
+                return o2.getValue().compareTo(o1.getValue());
             }
         });
 
@@ -108,6 +108,10 @@ public class Suggester {
                     toReturn.get(m).set(1, toReturn.get(m).get(1) + 1);
                     toReturn.get(m).set(2, Math.min(toReturn.get(m).get(2), missing.size()));
                 }
+
+                Log.d("jjj", "hello!");
+
+                FridgeToGo.refreshPreferences();
             }
         }
 

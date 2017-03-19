@@ -11,30 +11,12 @@
         android:layout_marginTop="24dp"
         style="@style/Widget.AppCompat.Button" />
 
-    <TextView
-        android:id="@+id/scan_content"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textIsSelectable="false"
-        android:layout_gravity="center"
-        android:layout_centerHorizontal="true"
-        android:layout_centerVertical="true"
-        android:gravity="center"
-        android:includeFontPadding="false" />
-
-    <Button android:id="@+id/ok_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="OK"
-        android:layout_gravity="center|bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="35dp"/>
     <Button
         android:id="@+id/minus_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
+        android:layout_below="@id/scan_button"
+        android:layout_marginTop="100dp"
         android:layout_toLeftOf="@+id/plus_button"
         android:layout_toStartOf="@+id/scan_button"
         android:text="-" />
@@ -47,6 +29,61 @@
         android:layout_toEndOf="@+id/scan_button"
         android:layout_toRightOf="@+id/scan_button"
         android:text="+" />
+
+    <TextView
+        android:text="Barcode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/scan_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="14dp"
+        android:id="@+id/name"
+        android:textSize="24sp"
+        android:textColor="@android:color/black" />
+
+    <TextView
+        android:text="Peremption Date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/name"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="36dp"
+        android:id="@+id/per_date" />
+
+    <TextView
+        android:id="@+id/scan_content"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textIsSelectable="false"
+        android:layout_gravity="center"
+        android:layout_alignBaseline="@id/minus_button"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:gravity="center"
+        android:includeFontPadding="false" />
+
+    <Button android:id="@+id/ok_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="OK"
+        android:layout_gravity="center"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/minus_button"
+        android:layout_marginTop="48dp" />
+
+    <Button
+        android:id="@+id/shop_finish"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:background="@color/colorAccent"
+        android:layout_below="@id/ok_button"
+        android:layout_marginTop="60dp"
+        android:text="Shop finished!"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:textAppearance="@style/TextAppearance.AppCompat"
+        android:textColor="?android:attr/textColorPrimary"/>
 
 
 </RelativeLayout>

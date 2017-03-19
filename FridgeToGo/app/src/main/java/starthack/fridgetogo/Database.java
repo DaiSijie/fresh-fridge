@@ -16,6 +16,7 @@ public class Database {
 
     public static Long barcode;
 
+    public static boolean shoppingMode = false;
 
     //THIS SHOULD BE HARDCODED
     private static ArrayList<String> ingredient = fillStuff1();
@@ -26,18 +27,36 @@ public class Database {
 
     //THIS IS THE REAL DYNAMIC DATA
     public static HashMap<String, ArrayList<Date>> fridgeContent = new HashMap<>();
+    public static HashMap<String, ArrayList<Date>> cartContent = new HashMap<>();
     public static HashMap<Long, String> barcodeToIngredient = new HashMap<>();
-    public static String currentIngredient = "xxx";
+    public static String currentIngredient = "";
 
     //Machine learning stuff
     private static ArrayList<Double[]> quotes = fillStuff2();
-    private static Double[] w;
+    private static Double[] w = {0.,0.,0.,0.,0.,0.};
     public static final Classifier c = new Classifier();
     public static final Suggester s = new Suggester();
 
     public static ArrayList<Double[]> getQuotes(){
         return quotes;
     }
+
+    public static void putInCart(String name, Date date) {
+        if (!cartContent.containsKey(name))
+            cartContent.put(name, new ArrayList<Date>());
+        cartContent.get(name).add(date);
+    }
+
+    public static void throwCartInFridge(){
+        for(Map.Entry<String, ArrayList<Date>> e : cartContent.entrySet()){
+            if(!fridgeContent.containsKey(e.getKey()))
+                fridgeContent.put(e.getKey(), new ArrayList<Date>());
+            fridgeContent.get(e.getKey()).addAll(e.getValue());
+        }
+
+        cartContent = new HashMap<>();
+    }
+
 
     private static ArrayList<String> fillStuff3(){
         String[] data = {"Chicken parmesan", "Tomato pasta", "Tuna pasta", "Tuna toasts", "Lasagna",
@@ -315,12 +334,17 @@ public class Database {
         if(!fridgeContent.containsKey(name))
             fridgeContent.put(name, new ArrayList<Date>());
         fridgeContent.get(name).add(date);
+        FridgeToGo.refreshPreferences();
     }
 
     public static boolean removeObjectInFridge(String name, Date date){
-        if(fridgeContent.containsKey(name))
+        if(fridgeContent.containsKey(name)) {
+            FridgeToGo.refreshPreferences();
             return fridgeContent.get(name).remove(date);
-        else return false;
+
+        }
+        FridgeToGo.refreshPreferences();
+        return false;
     }
 
     public static boolean isBarcodeKnown(Long code){

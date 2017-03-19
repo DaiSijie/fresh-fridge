@@ -1,6 +1,5 @@
 package starthack.fridgetogo;
 
-
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -12,25 +11,22 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class SmartMealFragment extends Fragment {
+public class SmartPurchaseFragment extends Fragment {
 
-    public static SmartMealFragment newInstance() {
-        SmartMealFragment fragment = new SmartMealFragment();
+    public static SmartPurchaseFragment newInstance() {
+        SmartPurchaseFragment fragment = new SmartPurchaseFragment();
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
-        ArrayList<Map.Entry<String, Double>> bests = Database.s.proposeDishes();
+        ArrayList<Map.Entry<String, ArrayList<Double>>> bests = Database.s.proposeShopping();
         int size = bests.size();
 
-        View view = inflater.inflate(R.layout.fragment_smart_meal, container, false);
+        View view = inflater.inflate(R.layout.fragment_smart_purchase, container, false);
 
-
-        TextView nothingToShow = (TextView)view.findViewById(R.id.nothingToShow);
-
-        nothingToShow.setVisibility(View.GONE);
+        //TextView nothingToShow = (TextView)view.findViewById(R.id.nothingToShow);
 
         TextView text1 = (TextView)view.findViewById(R.id.textView);
         Button button11 = (Button)view.findViewById(R.id.button11);
@@ -46,7 +42,7 @@ public class SmartMealFragment extends Fragment {
 
         if(size > 0) {
             final String name1 = bests.get(0).getKey();
-            text1.setText("Meal suggestion 1 : " + name1);
+            text1.setText("Shopping suggestion 1 : " + name1);
             button11.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -67,7 +63,7 @@ public class SmartMealFragment extends Fragment {
         }
         if(size > 1) {
             final String name2 = bests.get(1).getKey();
-            text2.setText("Meal suggestion 2 : " + name2);
+            text2.setText("Shopping suggestion 2 : " + name2);
             button21.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -84,12 +80,12 @@ public class SmartMealFragment extends Fragment {
             text2.setVisibility(View.GONE);
             button21.setVisibility(View.GONE);
             button22.setVisibility(View.GONE);
-            nothingToShow.setVisibility(View.VISIBLE);
+            //nothingToShow.setVisibility(View.VISIBLE);
         }
 
         if(size > 2) {
             final String name3 = bests.get(2).getKey();
-            text3.setText("Meal suggestion 3 : " + name3);
+            text3.setText("Shopping suggestion 3 : " + name3);
             button31.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

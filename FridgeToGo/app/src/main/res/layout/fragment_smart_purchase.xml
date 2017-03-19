@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="starthack.fridgetogo.SmartMealFragment">
+    tools:context="starthack.fridgetogo.SmartPurchaseFragment">
 
 
     <TextView
@@ -11,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:id="@+id/nothingToShow"
+        android:id="@+id/nothingToShow2"
+        android:visibility="gone"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1" />
 
     <TextView

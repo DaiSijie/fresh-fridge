@@ -4,6 +4,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -32,9 +33,11 @@ public class ScanFragment extends Fragment implements OnClickListener {
     private Button plusButton;
     private Button minusButton;
     private Button okButton;
+    private Button finishButton;
     private Date chosenDate = new Date();
     private Spinner spinner;
     private TextView text;
+    private TextView name;
 
     public ScanFragment() {
         // Required empty public constructor
@@ -69,8 +72,13 @@ public class ScanFragment extends Fragment implements OnClickListener {
         }if(view.getId()==R.id.ok_button){
             String ingredient = Database.currentIngredient;
             Database.putCodeToIngredient(ingredient, Database.barcode);
-            Database.putNewObjectInFridge(ingredient, new Date(chosenDate.getYear(), ));
+            Database.putInCart(ingredient, new Date(chosenDate.getYear(), chosenDate.getMonth(), chosenDate.getDate()));
+            Database.shoppingMode = true;
             FridgeToGo.refreshPreferences();
+        } if(view.getId()==R.id.shop_finish){
+            Database.throwCartInFridge();
+            Database.shoppingMode = false;
+            Log.d("TAG", "shop finished");
         }
 
     }
@@ -92,6 +100,9 @@ public class ScanFragment extends Fragment implements OnClickListener {
         text = (TextView)getView().findViewById(R.id.scan_content);
         text.setText(niceOutput(chosenDate));
 
+        name = (TextView)getView().findViewById(R.id.name);
+        name.setText("Product : " + Database.currentIngredient);
+
         plusButton = (Button)getView().findViewById(R.id.plus_button);
         plusButton.setOnClickListener(this);
 
@@ -100,6 +111,9 @@ public class ScanFragment extends Fragment implements OnClickListener {
 
         okButton = (Button)getView().findViewById(R.id.ok_button);
         okButton.setOnClickListener(this);
+
+        finishButton = (Button)getView().findViewById(R.id.shop_finish);
+        finishButton.setOnClickListener(this);
 
     }
 
