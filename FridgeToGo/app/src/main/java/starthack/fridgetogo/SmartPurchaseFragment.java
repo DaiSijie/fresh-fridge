@@ -29,7 +29,7 @@ public class SmartPurchaseFragment extends Fragment {
         TextView text1 = (TextView)view.findViewById(R.id.textView);
         TextView text2 = (TextView)view.findViewById(R.id.textView2);
         TextView text3 = (TextView)view.findViewById(R.id.textView3);
-        text1.setText(size > 0 ? "Shopping suggestion 2: " + bests.get(0).getKey() : "No suggestions yet.");
+        text1.setText(size > 0 ? "Shopping suggestion 1: " + bests.get(0).getKey() : "No suggestions yet.");
         text2.setText(size > 1 ? "Shopping suggestion 2: " + bests.get(1).getKey() : "");
         text3.setText(size > 2 ? "Shopping suggestion 3: " + bests.get(2).getKey() : "");
 

@@ -90,9 +90,6 @@ public class Database {
             fridgeContent.get(e.getKey()).addAll(e.getValue());
         }
 
-        someChange1 = true;
-        someChange2 = true;
-
         cartContent = new HashMap<>();
         t.flushCart();
     }

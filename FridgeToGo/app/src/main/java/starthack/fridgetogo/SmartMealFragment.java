@@ -28,10 +28,6 @@ public class SmartMealFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_smart_meal, container, false);
 
 
-        TextView nothingToShow = (TextView)view.findViewById(R.id.nothingToShow);
-
-        nothingToShow.setVisibility(View.GONE);
-
         TextView text1 = (TextView)view.findViewById(R.id.textView);
         Button button11 = (Button)view.findViewById(R.id.button11);
         Button button12 = (Button)view.findViewById(R.id.button12);
@@ -84,7 +80,6 @@ public class SmartMealFragment extends Fragment {
             text2.setVisibility(View.GONE);
             button21.setVisibility(View.GONE);
             button22.setVisibility(View.GONE);
-            nothingToShow.setVisibility(View.VISIBLE);
         }
 
         if(size > 2) {

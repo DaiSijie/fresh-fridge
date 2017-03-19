@@ -262,6 +262,8 @@ public class FridgeToGo extends AppCompatActivity {
                     fragment = SmartMealFragment.newInstance(); break;
                 case 3:
                     fragment = SmartPurchaseFragment.newInstance(); break;
+                case 4:
+                    fragment = InfoFragment.newInstance(); break;
             }
 
             return fragment;
@@ -269,8 +271,8 @@ public class FridgeToGo extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            // Show 4 total pages.
-            return 4;
+            // Show 5 total pages.
+            return 5;
         }
 
         @Override
@@ -285,7 +287,7 @@ public class FridgeToGo extends AppCompatActivity {
                 case 3:
                     return "SMART PURCHASE";
                 case 4:
-                    return "SMART PURCHASE";
+                    return "INFO";
             }
             return null;
         }

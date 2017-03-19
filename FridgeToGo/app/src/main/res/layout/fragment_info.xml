@@ -8,14 +8,30 @@
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/temperature" />
+        android:layout_marginTop="24dp"
+        android:id="@+id/temperature"
+        android:layout_centerHorizontal="true"
+        android:textSize="24sp" />
 
     <TextView
         android:text="TextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/temperature"
-        android:id="@+id/humidity" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="24dp"
+        android:id="@+id/humidity"
+        android:textSize="24sp" />
+
+    <Button
+        android:text="State"
+        android:layout_width="150dp"
+        android:layout_height="80dp"
+        android:layout_below="@+id/humidity"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="143dp"
+        android:id="@+id/state"
+        style="@style/Widget.AppCompat.Button.Colored" />
 
 
 </RelativeLayout>
