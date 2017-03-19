@@ -13,6 +13,7 @@
 
     <Button
         android:id="@+id/minus_button"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/scan_button"
@@ -23,6 +24,7 @@
 
     <Button
         android:id="@+id/plus_button"
+        style="@style/Widget.AppCompat.Button.Small"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignTop="@+id/minus_button"

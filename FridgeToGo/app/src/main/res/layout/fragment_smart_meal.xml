@@ -40,63 +40,71 @@
         android:textSize="18sp" />
 
     <Button
-        android:text="I like!"
+        android:id="@+id/button11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView"
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
-        android:id="@+id/button11" />
+        android:text="I like!"
+        android:textColorLink="@android:color/holo_green_dark" />
 
     <Button
-        android:text="Beurk!"
+        android:id="@+id/button12"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button11"
         android:layout_alignBaseline="@id/button11"
-        android:layout_toEndOf="@+id/button11"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:id="@+id/button12" />
+        android:layout_toEndOf="@+id/button11"
+        android:layout_toRightOf="@+id/button11"
+        android:text="Beurk!"
+        android:textColorLink="@android:color/holo_red_dark" />
 
     <Button
-        android:text="I like!"
+        android:id="@+id/button21"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView2"
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
-        android:id="@+id/button21" />
+        android:text="I like!"
+        android:textColorLink="@android:color/holo_green_dark" />
 
     <Button
-        android:text="Beurk!"
+        android:id="@+id/button22"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBaseline="@id/button21"
-        android:layout_toRightOf="@+id/button21"
-        android:layout_toEndOf="@+id/button21"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:id="@+id/button22" />
+        android:layout_toEndOf="@+id/button21"
+        android:layout_toRightOf="@+id/button21"
+        android:text="Beurk!"
+        android:textColorLink="@android:color/holo_red_dark" />
 
     <Button
-        android:text="I like!"
+        android:id="@+id/button31"
+        style="@style/Widget.AppCompat.Button.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/textView3"
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
-        android:id="@+id/button31" />
+        android:text="I like!"
+        android:textColorLink="@android:color/holo_green_dark" />
 
     <Button
-        android:text="Beurk!"
+        android:id="@+id/button32"
+        style="@style/Widget.AppCompat.Button.Borderless.Colored"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/button31"
-        android:layout_toEndOf="@+id/button31"
         android:layout_alignBaseline="@id/button31"
         android:layout_marginLeft="13dp"
         android:layout_marginStart="13dp"
-        android:id="@+id/button32" />
+        android:layout_toEndOf="@+id/button31"
+        android:layout_toRightOf="@+id/button31"
+        android:text="Beurk!"
+        android:textColorLink="@android:color/holo_red_dark" />
 
 </RelativeLayout>
