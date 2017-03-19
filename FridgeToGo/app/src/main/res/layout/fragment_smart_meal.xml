@@ -102,7 +102,7 @@
         android:layout_marginLeft="48dp"
         android:layout_marginStart="48dp"
         android:text="I like!"
-        android:textColorLink="@android:color/holo_green_light" />
+        android:textColorLink="@android:color/holo_green_dark" />
 
     <Button
         android:id="@+id/button32"
