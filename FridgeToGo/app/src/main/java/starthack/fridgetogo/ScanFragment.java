@@ -60,6 +60,8 @@ public class ScanFragment extends Fragment implements OnClickListener {
         if(view.getId()==R.id.scan_button){
             IntentIntegrator scanIntegrator = new IntentIntegrator(getActivity());
             scanIntegrator.initiateScan();
+            name.setText("Product : " + Database.currentIngredient);
+
         }
         if(view.getId()==R.id.plus_button){
             chosenDate.setDate(chosenDate.getDate() + 1);
@@ -118,7 +120,7 @@ public class ScanFragment extends Fragment implements OnClickListener {
     }
 
     private String niceOutput(Date d){
-        return (d.getDate() + 1) + "/" + (d.getMonth() + 1) + "/" + (1900 + d.getYear());
+        return d.getDate() + "/" + (d.getMonth() + 1) + "/" + (1900 + d.getYear());
     }
 
 

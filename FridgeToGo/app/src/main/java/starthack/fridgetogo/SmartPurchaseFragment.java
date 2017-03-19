@@ -26,83 +26,12 @@ public class SmartPurchaseFragment extends Fragment {
 
         View view = inflater.inflate(R.layout.fragment_smart_purchase, container, false);
 
-        //TextView nothingToShow = (TextView)view.findViewById(R.id.nothingToShow);
-
         TextView text1 = (TextView)view.findViewById(R.id.textView);
-        Button button11 = (Button)view.findViewById(R.id.button11);
-        Button button12 = (Button)view.findViewById(R.id.button12);
-
         TextView text2 = (TextView)view.findViewById(R.id.textView2);
-        Button button21 = (Button)view.findViewById(R.id.button21);
-        Button button22 = (Button)view.findViewById(R.id.button22);
-
         TextView text3 = (TextView)view.findViewById(R.id.textView3);
-        Button button31 = (Button)view.findViewById(R.id.button31);
-        Button button32 = (Button)view.findViewById(R.id.button32);
-
-        if(size > 0) {
-            final String name1 = bests.get(0).getKey();
-            text1.setText("Shopping suggestion 1 : " + name1);
-            button11.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name1, true);
-                }
-            });
-            button12.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name1, false);
-                }
-            });
-        } else{
-            text1.setVisibility(View.GONE);
-            button11.setVisibility(View.GONE);
-            button12.setVisibility(View.GONE);
-
-        }
-        if(size > 1) {
-            final String name2 = bests.get(1).getKey();
-            text2.setText("Shopping suggestion 2 : " + name2);
-            button21.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name2, true);
-                }
-            });
-            button22.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name2, false);
-                }
-            });
-        }else {
-            text2.setVisibility(View.GONE);
-            button21.setVisibility(View.GONE);
-            button22.setVisibility(View.GONE);
-            //nothingToShow.setVisibility(View.VISIBLE);
-        }
-
-        if(size > 2) {
-            final String name3 = bests.get(2).getKey();
-            text3.setText("Shopping suggestion 3 : " + name3);
-            button31.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name3, true);
-                }
-            });
-            button32.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Database.s.provideHint(name3, false);
-                }
-            });
-        } else {
-            text3.setVisibility(View.GONE);
-            button31.setVisibility(View.GONE);
-            button32.setVisibility(View.GONE);
-        }
+        text1.setText(size > 0 ? "Shopping suggestion 2: " + bests.get(0).getKey() : "No suggestions yet.");
+        text2.setText(size > 1 ? "Shopping suggestion 2: " + bests.get(1).getKey() : "");
+        text3.setText(size > 2 ? "Shopping suggestion 3: " + bests.get(2).getKey() : "");
 
         return view;
     }
@@ -110,6 +39,5 @@ public class SmartPurchaseFragment extends Fragment {
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-
     }
 }

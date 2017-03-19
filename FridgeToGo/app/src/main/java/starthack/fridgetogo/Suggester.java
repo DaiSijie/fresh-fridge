@@ -90,7 +90,9 @@ public class Suggester {
                 HashMap<String, Date> yop = new HashMap<>();
                 for(String m: missing) {
                     Date today = new Date();
+                    Log.d("ttt", "today = "+today.getTime());
                     today.setDate(today.getDate() + 1);
+                    Log.d("ttt", "new today = "+today.getTime());
                     Database.putNewObjectInFridge(m, today);
                     yop.put(m, today);
                 }
@@ -109,7 +111,6 @@ public class Suggester {
                     toReturn.get(m).set(2, Math.min(toReturn.get(m).get(2), missing.size()));
                 }
 
-                Log.d("jjj", "hello!");
 
                 FridgeToGo.refreshPreferences();
             }
