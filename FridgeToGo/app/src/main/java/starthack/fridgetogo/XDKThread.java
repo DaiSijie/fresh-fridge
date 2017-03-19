@@ -37,7 +37,13 @@ public class XDKThread  extends Thread {
         while(true){
             try {
                 info = messageHandler.getInfo(server);
-                Log.d("","temperature = "+info[0]+", humidity = "+info[1]);
+                Database.lock.lock();
+                try{
+                    Database.temperature = info[0];
+                    Database.humidity = info[1];
+                } finally {
+                    Database.lock.unlock();
+                }
                 messageHandler.setLight(getHappinness(info[0]/1000.));
                 messageHandler.sendChangeDiode();
                 this.sleep(500);
