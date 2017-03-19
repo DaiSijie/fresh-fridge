@@ -284,6 +284,8 @@ public class FridgeToGo extends AppCompatActivity {
                     return "SMART MEAL";
                 case 3:
                     return "SMART PURCHASE";
+                case 4:
+                    return "SMART PURCHASE";
             }
             return null;
         }

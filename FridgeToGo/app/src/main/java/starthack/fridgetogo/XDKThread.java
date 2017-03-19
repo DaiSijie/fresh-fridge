@@ -42,7 +42,7 @@ public class XDKThread  extends Thread {
                 messageHandler.sendChangeDiode();
                 this.sleep(500);
             } catch (Exception e) {
-                Log.d("error", "some error");
+                Log.d("error", e.toString());
             }
         }
     }

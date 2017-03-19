@@ -14,6 +14,9 @@ import java.util.Map;
 
 public class Database {
 
+    public static boolean someChange1 = true;
+    public static boolean someChange2 = true;
+
     public static XDKThread t;
 
     public static Long barcode;
@@ -62,6 +65,9 @@ public class Database {
                 fridgeContent.put(e.getKey(), new ArrayList<Date>());
             fridgeContent.get(e.getKey()).addAll(e.getValue());
         }
+
+        someChange1 = true;
+        someChange2 = true;
 
         cartContent = new HashMap<>();
         t.flushCart();
@@ -355,6 +361,7 @@ public class Database {
         }
         FridgeToGo.refreshPreferences();
         return false;
+
     }
 
     public static boolean isBarcodeKnown(Long code){

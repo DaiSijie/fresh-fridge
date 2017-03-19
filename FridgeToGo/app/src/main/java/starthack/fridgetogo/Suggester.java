@@ -18,6 +18,9 @@ import java.util.Map.Entry;
 
 public class Suggester {
 
+    private ArrayList<Entry<String, Double>> dishes;
+    private ArrayList<Entry<String, ArrayList<Double>>> toBuy;
+
     public Suggester(){
 
     }
@@ -43,7 +46,15 @@ public class Suggester {
      * @return The name of dish with scores (already sorted!)
      */
     public ArrayList<Entry<String, Double>> proposeDishes(){
-        /* 
+        //if(!Database.someChange1)
+        //    return dishes;
+        //Database.someChange1 = false;
+
+
+        Log.d("hey::", "They want me to propose them dishes");
+
+
+        /*
          * Stategy: For each doable dish, provide assign to it a real number a * classifier + b * urgency level
          * return sorted by this "score"
          */
@@ -75,49 +86,50 @@ public class Suggester {
      * @return
      */
     public ArrayList<Entry<String, ArrayList<Double>>> proposeShopping(){
+        //if(!Database.someChange2)
+        //    return toBuy;
+        //Database.someChange2 = false;
+
+        Log.d("hey!", "They want me to propose SHOPPING");
         /*
          * rationale: For each dish, we try to add missing ingredients and then compute the score,
          * 
          * A single missing ingredient is a big win, so we first prefer that to the score (heuristics)
          */
 
+        Date today = new Date();
+        today.setDate(today.getDate() + 1);
+
+        //first, create an imaginary fridge
+        HashMap<String, ArrayList<Date>> perfectFridge = new HashMap<>();
+        for(String s: Database.getIngredientList())
+                perfectFridge.put(s, new ArrayList<>(Arrays.asList(new Date[]{today})));
+
+
         //prepare the map!
         HashMap<String, ArrayList<Double>> toReturn = new HashMap<>();
         for(int i = 0; i < Database.getDishNames().size(); i++){
+            Log.d("doable?", ""+isDoable(i));
             if(!isDoable(i)){
                 HashSet<String> missing = missingIngredients(i);
                 //simulate a new stock! It's a hackaton right?
                 HashMap<String, Date> yop = new HashMap<>();
+                double score = computeScore(i, perfectFridge);
                 for(String m: missing) {
-                    Date today = new Date();
-                    Log.d("ttt", "today = "+today.getTime());
-                    today.setDate(today.getDate() + 1);
-                    Log.d("ttt", "new today = "+today.getTime());
-                    Database.putNewObjectInFridge(m, today);
-                    yop.put(m, today);
-                }
-
-                double score = computeScore(i);
-
-                //rollback to old stock and update cool factors!
-                for(String m: missing){
-                    Database.removeObjectInFridge(m, yop.get(m));
 
                     //update stuff
-                    if(!toReturn.containsKey(m))
-                        toReturn.put(m, new ArrayList<Double>(Arrays.asList(new Double[]{0.d, 0.d, 999.d}))); 
+                    if (!toReturn.containsKey(m))
+                        toReturn.put(m, new ArrayList<Double>(Arrays.asList(new Double[]{0.d, 0.d, 999.d})));
                     toReturn.get(m).set(0, toReturn.get(m).get(0) + score);
                     toReturn.get(m).set(1, toReturn.get(m).get(1) + 1);
                     toReturn.get(m).set(2, Math.min(toReturn.get(m).get(2), missing.size()));
                 }
-
-
-                FridgeToGo.refreshPreferences();
             }
         }
 
         //Now, order map to give best results
         ArrayList<Entry<String, ArrayList<Double>>> toReturnn = new ArrayList<>(toReturn.entrySet());
+        Log.d("yo! shit is empty?", ""+toReturnn.size());
         Collections.sort(toReturnn, new Comparator<Entry<String, ArrayList<Double>>>(){
             @Override
             public int compare(Entry<String, ArrayList<Double>> o1,Entry<String, ArrayList<Double>> o2) {
@@ -158,6 +170,38 @@ public class Suggester {
 
         return toReturn;
     }
+
+    private double computeScore(Integer dish, HashMap<String, ArrayList<Date>> fridge){
+
+        double likeable = Database.c.grade(Database.getQuotes().get(dish));
+
+        /*
+         * Urgency levels:
+         * day > 5 : 0
+         * 5 >= day > 2 : 1
+         * 2 >= day >= 0 : 2
+         */
+
+        double urgencyLevel = 0;
+        for(String ingredient: Database.getIngredientsForDish(dish)){
+            for(Date date: fridge.get(ingredient)){
+                Date today = new Date();
+                int delta = (int) (date.getTime() - today.getTime()) / (24  * 60 * 60 * 1000);
+                int urgency = 0;
+                if(5 >= delta && delta > 2)
+                    urgency = 1;
+                else if(2 >= delta)
+                    urgency = 2;
+                urgencyLevel = Math.max(urgencyLevel, urgency);
+            }
+        }
+
+
+        return likeable + urgencyLevel;
+
+    }
+
+
 
     private double computeScore(Integer dish){
 
