@@ -79,18 +79,7 @@ static void printEnvData(void *pvParameters)
     Environmental_LsbData_T bme280lsb = { INT32_C(0), INT32_C(0), INT32_C(0) };
     BCDS_UNUSED(pvParameters);
 
-/*
-    returnValue = Environmental_readDataLSB(xdkEnvironmental_BME280_Handle, &bme280lsb);
-    if ( RETCODE_OK == returnValue)
-    {
-        printf("BME280 Environmental Raw Data :\n\rp =%ld\n\rt =%ld\n\rh =%ld\n\r",
-                (long int) bme280lsb.pressure, (long int) bme280lsb.temperature, (long int) bme280lsb.humidity);
-    }
-    else
-    {
-        printf("Environmental Read Raw Data Failed\n\r");
-    }
-*/
+
     /* Read temperature,pressure,humidity actual values */
     for(int i=0 ; i<64;++i){
     	messageToSend[i] = '\0';
@@ -102,7 +91,6 @@ static void printEnvData(void *pvParameters)
         /*print chip id and Environmental data of BME280 on serialport */
     	sprintf(messageToSend, "T = %ld H = %ld", (long int) bme280.temperature, (long int) bme280.humidity);
     //  printf("%s\n",messageToSend);
-    //	messageToSend = "P = "+(bme280.pressure + '0')+", T = "+(bme280.temperature + '0')+", H = "+(bme280.humidity + '0');
     	setMessage(messageToSend, 64);
     }
     else

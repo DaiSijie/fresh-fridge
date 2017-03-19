@@ -178,29 +178,7 @@ void appInitSystem(xTimerHandle xTimer)
  */
 
 
-static returnTypes_t bsdUdpServer(uint16_t port){/*
-		static uint16_t counter = UINT16_C(0);
-		uint16_t bsdBuffer[BUFFER_SIZE] = { (uint16_t) ZERO };
-	 // RECEIVING SOCKET
-	    SlSockAddrIn_t Addr;
-	    SlSockAddrIn_t  LocalAddr;
-	    uint16_t AddrSize = (uint16_t) ZERO;
-	    int16_t SockID = (int16_t) ZERO;
-	    int16_t Status = (int16_t) ZERO;
-	    Addr.sin_family = SL_AF_INET;
-	    Addr.sin_port = sl_Htons((uint16_t) port);
-	    Addr.sin_addr.s_addr = sl_Htonl(SERVER_IP);
-	    AddrSize = sizeof(SlSockAddrIn_t);
-
-	    SockID = sl_Socket(SL_AF_INET, SL_SOCK_DGRAM, (uint32_t) ZERO); /**<The return value is a positive number if successful; other wise negative*/
-	     /*   if (SockID < (int16_t) ZERO)
-	        {
-	            /* error case*//*
-	            return (SOCKET_ERROR);
-	        }
-	        printf("test\n");
-	        Status = sl_Bind(SockID, (SlSockAddr_t *)&Addr, AddrSize);
-	        Status = sl_RecvFrom(SockID, &bsdBuffer, BUFFER_SIZE * sizeof(uint16_t), (uint32_t) ZERO, (SlSockAddr_t *) &Addr, AddrSize);/**<The return value is a number of characters sent;negative if not successful*/
+static returnTypes_t bsdUdpServer(uint16_t port){
 	            /*Check if 0 transmitted bytes sent or error condition*/
 	SlSockAddrIn_t  Addr;
 	SlSockAddrIn_t  LocalAddr;
@@ -264,12 +242,7 @@ static returnTypes_t bsdUdpClient(uint16_t port)
     uint16_t AddrSize = (uint16_t) ZERO;
     int16_t SockID = (int16_t) ZERO;
     int16_t Status = (int16_t) ZERO;
-    /* copies the dummy data to send array , the first array element is the running counter to track the number of packets send so far*/
-   /* bsdBuffer_mau[0] = (uint16_t) 'ta';
-    bsdBuffer_mau[1] = (uint16_t) 'el';
-    bsdBuffer_mau[2] = (uint16_t) 'sa';
-    bsdBuffer_mau[3] = (uint16_t) 'ta';
-    */
+
     Addr.sin_family = SL_AF_INET;
     Addr.sin_port = sl_Htons((uint16_t) port);
     Addr.sin_addr.s_addr = sl_Htonl(SERVER_IP);
@@ -327,16 +300,7 @@ static void wifiSend(xTimerHandle xTimer)
             assert(false);
         }
 }
-/*
-static void wifiReceive(xTimerHandle xTimer)
-{
-    BCDS_UNUSED(xTimer);
-    if (STATUS_OK != bsdUdpServer(CLIENT_PORT))
-    {
-        /* assertion Reason:  "Failed to  receive udp packet" *//*
-        assert(false);
-    }
-}*/
+
 
 /**
  *  @brief
@@ -406,11 +370,7 @@ static void wifiConnectGetIP(xTimerHandle xTimer)
     {
         assert(false);
     }
-    /* After connection start the wifi receiving timer*/
-    /*    if (xTimerStart(wifiReceiveTimerHandle, TIMERBLOCKTIME) != pdTRUE)
-        {
-            assert(false);
-        }*/
+
 }
 
 /* global functions ********************************************************* */
